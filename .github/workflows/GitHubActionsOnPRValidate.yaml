@@ -1,0 +1,14 @@
+name: sfdx-validation-on-PR
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
+jobs:
+  sfdx-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install node js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: |
+          node --version
+          npm --version
