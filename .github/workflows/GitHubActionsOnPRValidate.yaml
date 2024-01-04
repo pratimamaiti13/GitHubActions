@@ -22,8 +22,7 @@ jobs:
           mkdir -p ~/cli/sf
           tar xJf sf-linux-x64.tar.xz -C ~/cli/sf --strip-components 1
           echo $SHELL
-          echo "export PATH=~/cli/sf/bin:\$PATH" >> $HOME/.bashrc
-          source $HOME/.bashrc
+          echo "~/cli/sf/bin" >> $GITHUB_PATH
           sf --version
       - name: Authorize with salesforce org
         run: sf auth:jwt:grant --instance-url https://login.salesforce.com/ --client-id 3MVG9pRzvMkjMb6kNn45Qi9K2FLiCMPaUlgi9jHEcgHqZSVlMWwhpHmn8T4VINYFTBYElbS0KV0GyvDfS2MOg --jwt-key-file ${{ secrets.SERVER_KEY_FILE }} --username pratimamaiti@nagarro.com
