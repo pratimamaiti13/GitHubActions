@@ -14,3 +14,11 @@ jobs:
       - run: |
           node --version
           npm --version
+      - name: Install salesforce cli
+      - run: |
+          wget https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-x64.tar.xz
+          mkdir ~/cli/sf
+          tar xJf sf-linux-x64.tar.xz -C ~/cli/sf --strip-components 1
+          echo "export PATH=~/cli/sf/bin:\$PATH" >> $HOME/.bash_profile
+          sf --version
+          echo "${PATH}"
