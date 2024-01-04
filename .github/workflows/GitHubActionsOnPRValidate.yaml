@@ -25,4 +25,4 @@ jobs:
           source $HOME/.bash_profile
           sf --version
       - name: Install sfdx git delta plugin
-        run: echo y | sfdx plugins:install sfdx-git-delta
+        run: echo y | sf plugins:install sfdx-git-delta
