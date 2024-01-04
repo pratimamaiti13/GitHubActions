@@ -21,8 +21,8 @@ jobs:
           pwd
           mkdir -p ~/cli/sf
           tar xJf sf-linux-x64.tar.xz -C ~/cli/sf --strip-components 1
-          echo "export PATH=~/cli/sf/bin:\$PATH" >> $HOME/.bash_profile
-          source $HOME/.bash_profile
+          echo "export PATH=~/cli/sf/bin:\$PATH" >> $HOME/.bashrc
+          source $HOME/.bashrc
           sf --version
       - name: Install sfdx git delta plugin
         run: echo y | sf plugins:install sfdx-git-delta
