@@ -5,6 +5,8 @@ jobs:
   sfdx-validation:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout scm
+        uses: actions/checkout@v4
       - name: Install node js
         uses: actions/setup-node@v3
         with:
