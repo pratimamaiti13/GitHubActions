@@ -21,7 +21,6 @@ jobs:
           pwd
           mkdir -p ~/cli/sf
           tar xJf sf-linux-x64.tar.xz -C ~/cli/sf --strip-components 1
-          echo $SHELL
           echo "~/cli/sf/bin" >> $GITHUB_PATH
           ~/cli/sf/bin/sf --version
       - name: Authorize with salesforce org
