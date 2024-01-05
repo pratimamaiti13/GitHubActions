@@ -11,6 +11,12 @@ jobs:
   sfdx-validation:
     runs-on: ubuntu-latest
     steps:
+      - name: Run custom function
+        id: custom-function
+        run: &custom-function |
+          echo "This is a custom function"
+      - name: Another step using the custom function
+        run: *custom-function
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
