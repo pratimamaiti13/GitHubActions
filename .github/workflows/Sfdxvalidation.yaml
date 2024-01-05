@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout scm
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
       - name: Install node js
         uses: actions/setup-node@v3
         with:
@@ -39,4 +39,4 @@ jobs:
         run: |
           mkdir Delta
           git branch
-          sf sgd:source:delta --to origin/feature3 --from c1c6a5d9515fd82d011d68f5e5c531ed56379bc6 --output Delta
+          sf sgd:source:delta --to "feature3" --from c1c6a5d9515fd82d011d68f5e5c531ed56379bc6 --output Delta
