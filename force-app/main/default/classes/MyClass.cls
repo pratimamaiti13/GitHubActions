@@ -8,5 +8,3 @@ public with sharing class MyClass {
         return '1.0.0';
     }
 }
-//compiled successfully
-//shivam bhardwaj
