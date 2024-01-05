@@ -43,7 +43,7 @@ jobs:
         run: echo y | sf plugins:install sfdx-git-delta
       - name: Display checked-out branch
         run: |
-          echo "Checked-out branch: ${{ github.event.ref }}"
+          echo "Checked-out branch: ${{ GITHUB_REF }}"
       - name: Create delta package for deployment
         run: |
           mkdir Delta
