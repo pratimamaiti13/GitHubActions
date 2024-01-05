@@ -13,6 +13,10 @@ jobs:
     steps:
       - name: Checkout scm
         uses: actions/checkout@v4
+      - name: Checkout branch
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}
       - name: Install node js
         uses: actions/setup-node@v3
         with:
@@ -38,7 +42,6 @@ jobs:
       - name: Display checked-out branch
         run: |
           echo "Checked-out branch: ${{ github.event.ref }}"
-
       - name: Create delta package for deployment
         run: |
           mkdir Delta
