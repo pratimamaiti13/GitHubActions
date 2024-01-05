@@ -48,3 +48,6 @@ jobs:
           ls
           cat Delta/destructiveChanges/destructiveChanges.xml
           cat Delta/package/package.xml
+      - name: Validation against salesforce
+        run: |
+          sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
