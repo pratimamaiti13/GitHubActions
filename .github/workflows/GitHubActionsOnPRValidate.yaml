@@ -1,6 +1,12 @@
 name: sfdx-validation-on-PR
 run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+on: 
+  pull_request:
+    types:
+      - opened
+      - reopened
+    branches:
+      - dev
 jobs:
   sfdx-validation:
     runs-on: ubuntu-latest
@@ -29,3 +35,7 @@ jobs:
           sf auth:jwt:grant --instance-url https://login.salesforce.com/ --username pratimamaiti@nagarro.com --client-id 3MVG9pRzvMkjMb6kNn45Qi9K2FLiCMPaUlgi9jHEcgHqZSVlMWwhpHmn8T4VINYFTBYElbS0KV0GyvDfS2MOg --jwt-key-file server.key
       - name: Install sfdx git delta plugin
         run: echo y | sf plugins:install sfdx-git-delta
+      - name: Create delta package for deployment
+        run: |
+          mkdir Delta
+          sf sgd:source:delta --to feature3 --from c1c6a5d9515fd82d011d68f5e5c531ed56379bc6 --output Delta
