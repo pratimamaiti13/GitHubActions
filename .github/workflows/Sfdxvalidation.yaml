@@ -8,20 +8,11 @@ on:
     branches:
       - dev
 jobs:
-  process-test-class:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout scm
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
   sfdx-validation:
-    needs: process-test-class
     runs-on: ubuntu-latest
     steps:
       - name: Process test class
         run: |
-          prDescription = 1
           if [[ ${{ github.ref }} == *${ref}* ]]; then
           echo "version tag is........................"
           else
