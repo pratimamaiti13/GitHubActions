@@ -25,8 +25,7 @@ jobs:
           PR_DESCRIPTION=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
           | jq -r '.body')
-          echo "PR Description: $PR_DESCRIPTION"
-        
+          echo "PR Description: $PR_DESCRIPTION"        
       - name: Process test class
         run: |
           if [[ ${{ github.ref }} == *${ref}* ]]; then
@@ -74,4 +73,4 @@ jobs:
           cat Delta/package/package.xml
       - name: Validation against salesforce
         run: |
-          sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
+          sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level $PR_DESCRIPTION --wait 20 --dry-run --json
