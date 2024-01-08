@@ -19,8 +19,10 @@ jobs:
         run: |
           if [[ ${{ github.ref }} == *${ref}* ]]; then
           echo "version tag is........................"
+          echo "::set-output name=Testclasses:: dummyTest"
           else
           echo "There is no github tag reference, skipping"
+          echo "::set-output name=TestLevelValue::dummyTestLevelValue"
           fi
       - name: Install node js
         uses: actions/setup-node@v3
