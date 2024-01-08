@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Another step using the custom function
-        uses: pratimamaiti13/GitHubActions/.github/workflows/processTestClass.yaml@dev
+        uses: GitHubActions/.github/workflows/processTestClass.yaml
         with:
           dummy-string: "Hello GitHubActions"
       - name: Checkout scm

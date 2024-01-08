@@ -1,4 +1,4 @@
-on:  # Specifies the event triggering the workflow
+on:
   workflow_call:  
     inputs: 
       dummy-string:  
