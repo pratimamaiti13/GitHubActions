@@ -19,14 +19,18 @@ jobs:
     needs: process-test-class
     runs-on: ubuntu-latest
     steps:
+      - name: Process test class
+        run: |
+          prDescription = 1
+          if [[ ${{ github.ref }} == *${ref}* ]]; then
+          echo "version tag is........................"
+          else
+          echo "There is no github tag reference, skipping"
+          fi
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Run Reusable Workflow
-        uses: ./.github/workflows/processTestClass.yaml
-        with:
-          dummy-string: "Hello GitHubActions"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
