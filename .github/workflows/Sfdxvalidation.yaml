@@ -8,17 +8,13 @@ on:
     branches:
       - dev
 jobs:
-  custom_func:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Custom function
-        run: |
-          echo "This is a dummy custom function..."
   sfdx-validation:
     runs-on: ubuntu-latest
     steps:
       - name: Another step using the custom function
-        run: *custom-func
+        uses: GitHubActions/.github/workflows/processTestClass.yaml@dev
+        with:
+          dummy-string: "Hello GitHubActions"
       - name: Checkout scm
         uses: actions/checkout@v4
         with:

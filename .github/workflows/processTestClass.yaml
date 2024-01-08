@@ -1,0 +1,6 @@
+on:  # Specifies the event triggering the workflow
+  workflow_call:  
+    inputs: 
+      dummy-string:  
+        required: true 
+        type: string
