@@ -24,6 +24,9 @@ jobs:
           echo "There is no github tag reference, skipping"
           echo "TestLevelValue=dummyTestLevelValue" >> $GITHUB_ENV
           fi
+      - name: Print TestClasses
+        run: |
+          echo "TestClasses value: $Testclasses"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
