@@ -9,16 +9,24 @@ on:
       - dev
 jobs:
   process-test-class:
-      uses: pratimamaiti13/GitHubActions/.github/workflows/processTestClass.yaml@dev
-      with:
-        dummy-string: "Hello GitHubActions"
-  sfdx-validation:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+  sfdx-validation:
+    needs: process-test-class
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout scm
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run Reusable Workflow
+        uses: ./.github/workflows/processTestClass.yaml
+        with:
+          dummy-string: "Hello GitHubActions"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
