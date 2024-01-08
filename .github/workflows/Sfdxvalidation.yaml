@@ -19,6 +19,14 @@ jobs:
         run: |
           sudo apt install -y jq
           jq --version
+      - name: Get PR number and PR description
+        run: |
+          PR_NUMBER=${{ github.event.number }}
+          PR_DESCRIPTION=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
+          | jq -r '.body')
+          echo "PR Description: $PR_DESCRIPTION"
+        
       - name: Process test class
         run: |
           if [[ ${{ github.ref }} == *${ref}* ]]; then
