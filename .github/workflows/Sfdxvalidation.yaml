@@ -27,9 +27,9 @@ jobs:
           | jq -r '.body')
           echo "PR Description: $PR_DESCRIPTION"
           PR_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | awk '{$1=$1};1')
-          PR_DESCRIPTION_LOWER=$(echo "${PR_DESCRIPTION}" | tr '[:upper:]' '[:lower:]')
+          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\n' | awk '{$1=$1};1' | tr '[:upper:]' '[:lower:]')
           echo "Original PR Description: ${PR_DESCRIPTION}"
-          echo "Trimmed and Lowercased PR Description: ${PR_DESCRIPTION_LOWER}"
+          echo "Trimmed and Lowercased PR Description: ${PROCESSED_DESCRIPTION}"
           echo "TestLevel=$PR_DESCRIPTION" >> $GITHUB_ENV        
       - name: Process test class
         run: |
