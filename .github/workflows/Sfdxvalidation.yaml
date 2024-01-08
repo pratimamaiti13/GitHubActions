@@ -11,6 +11,10 @@ jobs:
   sfdx-validation:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout scm
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Process test class
         run: |
           if [[ ${{ github.ref }} == *${ref}* ]]; then
@@ -18,10 +22,6 @@ jobs:
           else
           echo "There is no github tag reference, skipping"
           fi
-      - name: Checkout scm
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       - name: Install node js
         uses: actions/setup-node@v3
         with:
