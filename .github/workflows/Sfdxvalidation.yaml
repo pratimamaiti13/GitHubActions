@@ -8,15 +8,17 @@ on:
     branches:
       - dev
 jobs:
+  custom_func:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Custom function
+        run: |
+          echo "This is a dummy custom function..."
   sfdx-validation:
     runs-on: ubuntu-latest
     steps:
-      - name: Run custom function
-        id: custom-function
-        run: &custom-function |
-          echo "This is a custom function"
       - name: Another step using the custom function
-        run: *custom-function
+        run: *custom-func
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
