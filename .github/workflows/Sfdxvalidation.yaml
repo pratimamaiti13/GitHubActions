@@ -16,7 +16,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Print PR description
-        run: echo "PR description is ${{ pull_request_comments }}"
+        uses: jadrol/pr-description-checker-action@v1.0.0
+        id: description-checker
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Process test class
         run: |
           if [[ ${{ github.ref }} == *${ref}* ]]; then
