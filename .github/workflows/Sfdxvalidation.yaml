@@ -9,9 +9,7 @@ on:
       - dev
 jobs:
   sfdx-validation:
-    runs-on: ubuntu-latest
-    env:
-      TestLevelValue: ${{ env.TestLevelValue }} 
+    runs-on: ubuntu-latest 
     steps:
       - name: Checkout scm
         uses: actions/checkout@v4
@@ -45,6 +43,8 @@ jobs:
       - name: Print TestLevel
         run: |
           echo "Test level value is: ${TestLevelValue}"
+        env:
+          TestLevelValue: ${{ env.TestLevelValue }}
       - name: Install node js
         uses: actions/setup-node@v3
         with:
