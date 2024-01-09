@@ -23,8 +23,7 @@ jobs:
         run: |
           pwd
           ls
-          result = $(bash .github/workflows/processTestClass.sh 5 10)
-          echo "The result is: $result"
+          bash .github/workflows/processTestClass.sh 15 10
       - name: Get PR number and PR description
         run: |
           PR_NUMBER=${{ github.event.number }}
@@ -38,17 +37,6 @@ jobs:
           echo "PROCESSED_DESCRIPTION=${PROCESSED_DESCRIPTION}" >> $GITHUB_ENV
           source $GITHUB_ENV
           echo "Trimmed PR Description: $PROCESSED_DESCRIPTION"
-      - name: Process test class
-        run: |
-          if [ "$(echo "${PROCESSED_DESCRIPTION}" | tr '[:upper:]' '[:lower:]')" = 'runlocaltests' ]; then
-            echo "Inside runlocaltest block"
-            echo "TestLevelValue=RunLocalTests" >> $GITHUB_ENV
-            source $GITHUB_ENV
-            echo "Test level value is: $TestLevelValue"
-          else
-            echo "There is no github tag reference, skipping"
-          echo "TestLevelValue=dummyTestLevelValue" >> $GITHUB_ENV
-          fi
       - name: Print TestLevel
         run: |
           echo "Test level value is: ${{ env.TestLevelValue }}"

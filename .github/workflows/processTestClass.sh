@@ -12,3 +12,9 @@ my_function() {
     # Return the result
     echo $result
 }
+
+# Call the function with arguments and store the result
+output=$(my_function 5 10)
+
+# Print the result
+echo "The result is: $output"
