@@ -16,5 +16,5 @@ my_function() {
 # Example usage:
 prDescription="RunSpecifiedTests Class1,Class2,Class3"
 my_function "$prDescription"
-echo "Result 1: $global_result1"
-echo "Result 2: $global_result2"
+echo "Result 1: $Testclasses"
+echo "Result 2: $TestLevelValue"
