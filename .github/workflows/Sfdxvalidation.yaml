@@ -23,7 +23,7 @@ jobs:
         run: |
           pwd
           ls
-          output=$(bash .github/workflows/processTestClass.sh 15 10)
+          output=$(bash .github/workflows/processTestClass.sh 5 10)
           echo "RESULT=$output" >> $GITHUB_ENV
       - name: Use Result in Another Step
         run: |
