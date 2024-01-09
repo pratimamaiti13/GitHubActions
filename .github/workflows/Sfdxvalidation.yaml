@@ -41,7 +41,7 @@ jobs:
           result2=$(echo "$output" | awk '/Result 2:/ {print $3}')
           
           echo "Result 1: $result1"
-          echo "Result 2: $result2
+          echo "Result 2: $result2"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
