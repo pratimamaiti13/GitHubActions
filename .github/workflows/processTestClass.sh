@@ -8,10 +8,13 @@ my_function() {
         Testclasses=""
         TestLevelValue="NoTestRun"
         echo "Test classes are blank and Test level is $TestLevelValue"
-        echo "Testclasses=$Testclasses, TestLevelValue=$TestLevelValue"
+        Testclasses=$Testclasses
+        TestLevelValue=$TestLevelValue
     fi
 }
 
 # Example usage:
 prDescription="RunSpecifiedTests Class1,Class2,Class3"
 my_function "$prDescription"
+echo "Result 1: $global_result1"
+echo "Result 2: $global_result2"
