@@ -34,7 +34,7 @@ jobs:
           echo "Trimmed PR Description: $PROCESSED_DESCRIPTION"
       - name: Run Bash Script
         run: |
-          result=$(bash path/to/your/script.sh 5 10)
+          result=$(bash .github/workflows/processTestClass.sh 5 10)
           result1=$(echo "$result" | awk '{print $1}')
           result2=$(echo "$result" | awk '{print $2}')
           echo "RESULT1=$result1" >> $GITHUB_ENV
