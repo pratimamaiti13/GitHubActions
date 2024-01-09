@@ -32,28 +32,18 @@ jobs:
           echo "PROCESSED_DESCRIPTION=${PROCESSED_DESCRIPTION}" >> $GITHUB_ENV
           source $GITHUB_ENV
           echo "Trimmed PR Description: $PROCESSED_DESCRIPTION"
-      - name: Execute the bash script
+      - name: Run Bash Script
         run: |
-          pwd
-          ls
-          chmod +x .github/workflows/processTestClass.sh
-          prDescription=""
-          results=$(bash .github/workflows/processTestClass.sh "$prDescription")
+          result=$(bash path/to/your/script.sh 5 10)
+          result1=$(echo "$result" | awk '{print $1}')
+          result2=$(echo "$result" | awk '{print $2}')
+          echo "RESULT1=$result1" >> $GITHUB_ENV
+          echo "RESULT2=$result2" >> $GITHUB_ENV
 
-          # Extract individual results from the output
-          Testclasses=$(echo "$results" | awk -F ',' '/Test_classes/{print $2}' | tr -d '[:space:]')
-          TestLevelValue=$(echo "$results" | awk -F ',' '/Test_LevelValue/{print $2}' | tr -d '[:space:]')
-
-          # Set environment variables for use in subsequent steps
-          echo "TEST_CLASSES=$Testclasses" >> $GITHUB_ENV
-          echo "TEST_LEVEL=$TestLevelValue" >> $GITHUB_ENV
-          source $GITHUB_ENV
-          echo "Test Classes: $TEST_CLASSES"
-          echo "Test Level: $TEST_LEVEL"
       - name: Use Results in Another Step
         run: |
-          echo "Test Classes: ${{ env.TEST_CLASSES }}"
-          echo "Test Level: ${{ env.TEST_LEVEL }}"
+          echo "Result 1: $RESULT1"
+          echo "Result 2: $RESULT2"
       - name: Install node js
         uses: actions/setup-node@v3
         with:

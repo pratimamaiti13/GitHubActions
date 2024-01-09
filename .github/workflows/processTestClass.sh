@@ -1,21 +1,23 @@
 #!/bin/bash
-TEST_CLASSES=""  # Updated variable name
-TEST_LEVEL=""  # Updated variable name
-# Define a parameterized function
+
+# Define a function with global variables
 my_function() {
-    # $1 is the first parameter, $2 is the second parameter, and so on
-    prDescription="$1"
-    if [ -z "$prDescription" ]; then
-        TEST_CLASSES=""  # Updated variable name
-        TEST_LEVEL="NoTestRun"  # Updated variable name
-        echo "Test classes are $TEST_CLASSES, and Test level is $TEST_LEVEL"
-    fi
+    # $1 is the first parameter, $2 is the second parameter
+    local parameter1=$1
+    local parameter2=$2
+
+    # Perform some operations based on the parameters
+    result1=$((parameter1 + parameter2))
+    result2=$((parameter1 * parameter2))
+
+    # Assign the results to global variables
+    global_result1=$result1
+    global_result2=$result2
 }
 
-# Example usage:
-prDescription="$1"
-my_function "$prDescription"
+# Call the function with arguments
+my_function 5 10
 
-# Assign the values to the global variables
-echo "Result 1: $TEST_CLASSES"  # Updated variable name
-echo "Result 2: $TEST_LEVEL"  # Updated variable name
+# Access the global variables to get the results
+echo "Result 1: $global_result1"
+echo "Result 2: $global_result2"
