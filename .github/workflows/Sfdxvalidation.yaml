@@ -35,6 +35,7 @@ jobs:
       - name: Run script and capture output
         id: myscript
         run: |
+          chmod +x .github/workflows/processTestClass.sh
           output=$(.github/workflows/processTestClass.sh 5 10)
           result1=$(echo "$output" | awk '/Result 1:/ {print $3}')
           result2=$(echo "$output" | awk '/Result 2:/ {print $3}')
