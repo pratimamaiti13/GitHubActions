@@ -26,7 +26,7 @@ jobs:
           "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
           | jq -r '.body')
           echo "PR Description: $PR_DESCRIPTION"
-          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\n' | awk '{$1=$1};1' | tr '[:upper:]' '[:lower:]')
+          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | sed '/^$/d' | awk '{$1=$1};1')
           echo "Original PR Description: ${PR_DESCRIPTION}"
           echo "Trimmed and Lowercased PR Description: ${PROCESSED_DESCRIPTION}"
           echo "TestLevel=$PR_DESCRIPTION" >> $GITHUB_ENV        
