@@ -10,6 +10,8 @@ on:
 jobs:
   sfdx-validation:
     runs-on: ubuntu-latest
+    env:
+      TestLevelValue: ""
     steps:
       - name: Checkout scm
         uses: actions/checkout@v4
