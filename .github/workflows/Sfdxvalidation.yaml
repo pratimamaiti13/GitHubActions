@@ -23,7 +23,7 @@ jobs:
         run: |
           pwd
           ls
-          bash ./github/workflows/processTestClass.sh 5 10
+          bash .github/workflows/processTestClass.sh 5 10
       - name: Get PR number and PR description
         run: |
           PR_NUMBER=${{ github.event.number }}
