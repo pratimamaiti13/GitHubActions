@@ -23,7 +23,7 @@ jobs:
         run: |
           python3 - <<EOF
           def evaluateSimpleFunction(entry):
-          return "Hello"
+            return "Hello"
           print(evaluateSimpleFunction("example"))
           EOF
       - name: Get PR number and PR description
