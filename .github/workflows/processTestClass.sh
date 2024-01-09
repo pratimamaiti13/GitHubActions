@@ -1,6 +1,6 @@
 #!/bin/bash
-Test_classes=""
-Test_LevelValue=""
+export Test_classes=""
+export Test_LevelValue=""
 # Define a parameterized function
 my_function() {
     # $1 is the first parameter, $2 is the second parameter, and so on
