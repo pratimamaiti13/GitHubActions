@@ -28,13 +28,11 @@ jobs:
           echo "PR Description: $PR_DESCRIPTION"
           PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
           echo "Original PR Description: ${PR_DESCRIPTION}"
-          echo "Trimmed and Lowercased PR Description: ${PROCESSED_DESCRIPTION}"
-          echo "TestLevel=$PR_DESCRIPTION" >> $GITHUB_ENV        
+          echo "Trimmed and Lowercased PR Description: ${PROCESSED_DESCRIPTION}"       
       - name: Process test class
         run: |
-          if [[ ${{ github.ref }} == *${ref}* ]]; then
-          echo "version tag is........................"
-          echo "Testclasses=dummyTestclasses" >> $GITHUB_ENV
+          if [ "$(echo "${PROCESSED_DESCRIPTION}" | tr '[:upper:]' '[:lower:]')" = 'runlocaltests' ]; then
+          echo "Inside runlocaltest block"
           else
           echo "There is no github tag reference, skipping"
           echo "TestLevelValue=dummyTestLevelValue" >> $GITHUB_ENV
