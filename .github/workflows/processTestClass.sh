@@ -5,9 +5,9 @@ my_function() {
     # $1 is the first parameter, $2 is the second parameter, and so on
     prDescription="$1"
     if [ -z "$prDescription" ]; then
-        export Test_classes=""
-        export Test_LevelValue="NoTestRun"
-        echo "Test classes are blank and Test level is $Test_LevelValue"
+        export TEST_CLASSES=""  # Updated variable name
+        export TEST_LEVEL="NoTestRun"  # Updated variable name
+        echo "Test classes are blank, and Test level is $TEST_LEVEL"
     fi
 }
 
@@ -16,5 +16,5 @@ prDescription="$1"
 my_function "$prDescription"
 
 # Assign the values to the global variables
-echo "Result 1: $Test_classes"
-echo "Result 2: $Test_LevelValue"
+echo "Result 1: $TEST_CLASSES"  # Updated variable name
+echo "Result 2: $TEST_LEVEL"  # Updated variable name

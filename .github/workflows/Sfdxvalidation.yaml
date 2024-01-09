@@ -46,7 +46,9 @@ jobs:
           # Set environment variables for use in subsequent steps
           echo "TEST_CLASSES=$Testclasses" >> $GITHUB_ENV
           echo "TEST_LEVEL=$TestLevelValue" >> $GITHUB_ENV
-
+          source $GITHUB_ENV
+          echo "Test Classes: $TEST_CLASSES"
+          echo "Test Level: $TEST_LEVEL"
       - name: Use Results in Another Step
         run: |
           echo "Test Classes: $TEST_CLASSES"
