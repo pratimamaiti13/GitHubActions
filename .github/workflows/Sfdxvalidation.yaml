@@ -33,6 +33,7 @@ jobs:
           echo "Lowervased PR Description: ${LOWER_CASE_DESCRIPTION}"
       - name: Process test class
         run: |
+          echo "Lowervased PR Description: ${LOWER_CASE_DESCRIPTION}"        
           if [ "${LOWER_CASE_DESCRIPTION}" = 'runlocaltests' ]; then
             echo "Inside runlocaltest block"
           else
