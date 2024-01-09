@@ -1,13 +1,14 @@
 #!/bin/bash
-
+TEST_CLASSES=""  # Updated variable name
+TEST_LEVEL=""  # Updated variable name
 # Define a parameterized function
 my_function() {
     # $1 is the first parameter, $2 is the second parameter, and so on
     prDescription="$1"
     if [ -z "$prDescription" ]; then
-        export TEST_CLASSES=""  # Updated variable name
-        export TEST_LEVEL="NoTestRun"  # Updated variable name
-        echo "Test classes are blank, and Test level is $TEST_LEVEL"
+        TEST_CLASSES=""  # Updated variable name
+        TEST_LEVEL="NoTestRun"  # Updated variable name
+        echo "Test classes are $TEST_CLASSES, and Test level is $TEST_LEVEL"
     fi
 }
 
