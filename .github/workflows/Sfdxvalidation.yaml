@@ -32,18 +32,15 @@ jobs:
           echo "PROCESSED_DESCRIPTION=${PROCESSED_DESCRIPTION}" >> $GITHUB_ENV
           source $GITHUB_ENV
           echo "Trimmed PR Description: $PROCESSED_DESCRIPTION"
-      - name: Run Bash Script
+      - name: Run script and capture output
+        id: myscript
         run: |
-          result=$(bash .github/workflows/processTestClass.sh 5 10)
-          result1=$(echo "$result" | awk '{print $1}')
-          result2=$(echo "$result" | awk '{print $2}')
-          echo "RESULT1=$result1" >> $GITHUB_ENV
-          echo "RESULT2=$result2" >> $GITHUB_ENV
-
-      - name: Use Results in Another Step
-        run: |
-          echo "Result 1: $RESULT1"
-          echo "Result 2: $RESULT2"
+          output=$(.github/workflows/processTestClass.sh 5 10)
+          result1=$(echo "$output" | awk '/Result 1:/ {print $3}')
+          result2=$(echo "$output" | awk '/Result 2:/ {print $3}')
+          
+          echo "Result 1: $result1"
+          echo "Result 2: $result2
       - name: Install node js
         uses: actions/setup-node@v3
         with:

@@ -16,7 +16,7 @@ my_function() {
 }
 
 # Call the function with arguments
-my_function 5 10
+my_function "$1" "$2"
 
 # Access the global variables to get the results
 echo "Result 1: $global_result1"
