@@ -34,17 +34,15 @@ jobs:
         run: |
           if [ "$(echo "${PROCESSED_DESCRIPTION}" | tr '[:upper:]' '[:lower:]')" = 'runlocaltests' ]; then
             echo "Inside runlocaltest block"
-            export TestLevelValue=RunLocalTests
-            echo "Test level value is: ${TestLevelValue}"
+            echo "TestLevelValue=RunLocalTests" >> $GITHUB_ENV
+            echo "Test level value is: ${{ env.TestLevelValue }}
           else
             echo "There is no github tag reference, skipping"
           echo "TestLevelValue=dummyTestLevelValue" >> $GITHUB_ENV
           fi
       - name: Print TestLevel
         run: |
-          echo "Test level value is: ${TestLevelValue}"
-        env:
-          TestLevelValue: ${{ env.TestLevelValue }}
+          echo "Test level value is: ${{ env.TestLevelValue }}"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
