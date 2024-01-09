@@ -33,7 +33,7 @@ jobs:
           echo "Lowervased PR Description: ${LOWER_CASE_DESCRIPTION}"
       - name: Process test class
         run: |
-          if [ "$(echo "${PROCESSED_DESCRIPTION}" | tr '[:upper:]' '[:lower:]')" = 'runlocaltests' ]; then
+          if [ "${LOWER_CASE_DESCRIPTION}" = 'runlocaltests' ]; then
             echo "Inside runlocaltest block"
           else
             echo "There is no github tag reference, skipping"
