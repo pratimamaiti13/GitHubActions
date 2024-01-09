@@ -36,12 +36,13 @@ jobs:
         run: |
           pwd
           ls
+          chmod +x .github/workflows/processTestClass.sh
           prDescription=""
           results=$(bash .github/workflows/processTestClass.sh "$prDescription")
 
           # Extract individual results from the output
-          Testclasses=$(echo "$results" | awk -F ',' '/Test_classes/{print $2}')
-          TestLevelValue=$(echo "$results" | awk -F ',' '/Test_LevelValue/{print $2}')
+          Testclasses=$(echo "$results" | awk -F ',' '/Test_classes/{print $2}' | tr -d '[:space:]')
+          TestLevelValue=$(echo "$results" | awk -F ',' '/Test_LevelValue/{print $2}' | tr -d '[:space:]')
 
           # Set environment variables for use in subsequent steps
           echo "TEST_CLASSES=$Testclasses" >> $GITHUB_ENV
