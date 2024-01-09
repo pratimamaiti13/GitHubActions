@@ -20,7 +20,7 @@ jobs:
           sudo apt install -y jq
           jq --version
       - name: Execute the bash script
-        run: bash ./script.sh 5 10
+        run: bash ./processTestClass.sh 5 10
       - name: Get PR number and PR description
         run: |
           PR_NUMBER=${{ github.event.number }}
