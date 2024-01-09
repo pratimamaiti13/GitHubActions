@@ -19,13 +19,8 @@ jobs:
         run: |
           sudo apt install -y jq
           jq --version
-      - name: Create a function
-        run: |
-          python3 - <<EOF
-          def evaluateSimpleFunction(entry):
-            return "Hello"
-          print(evaluateSimpleFunction("example"))
-          EOF
+      - name: Execute the bash script
+        run: bash ./script.sh 5 10
       - name: Get PR number and PR description
         run: |
           PR_NUMBER=${{ github.event.number }}
