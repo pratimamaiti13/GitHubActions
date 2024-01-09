@@ -19,6 +19,14 @@ jobs:
         run: |
           sudo apt install -y jq
           jq --version
+      - name: Create a function
+        run: |
+          def evaluateSimpleFunction(entry):
+            return "Hello"
+      - name: Call a function
+        run: |
+          rc = evaluateSimpleFunction(entry)
+          echo "The value of rc is: $rc"
       - name: Get PR number and PR description
         run: |
           PR_NUMBER=${{ github.event.number }}
