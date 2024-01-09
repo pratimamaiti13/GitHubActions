@@ -36,7 +36,7 @@ jobs:
         run: |
           pwd
           ls
-          prDescription="RunSpecifiedTests Class1,Class2,Class3"
+          prDescription=""
           results=$(bash .github/workflows/processTestClass.sh "$prDescription")
 
           # Extract individual results from the output
