@@ -9,6 +9,7 @@ my_function() {
         TestLevelValue="NoTestRun"
         echo "Test classes are blank and Test level is $TestLevelValue"
         echo "Testclasses=$Testclasses, TestLevelValue=$TestLevelValue"
+    fi
 }
 
 prDescription="RunSpecifiedTests Class1,Class2,Class3"

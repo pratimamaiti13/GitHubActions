@@ -19,6 +19,19 @@ jobs:
         run: |
           sudo apt install -y jq
           jq --version
+      - name: Get PR number and PR description
+        run: |
+          PR_NUMBER=${{ github.event.number }}
+          PR_DESCRIPTION=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
+          | jq -r '.body')
+          echo "PR Description: $PR_DESCRIPTION"
+          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
+          echo "Original PR Description: ${PR_DESCRIPTION}"
+          echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
+          echo "PROCESSED_DESCRIPTION=${PROCESSED_DESCRIPTION}" >> $GITHUB_ENV
+          source $GITHUB_ENV
+          echo "Trimmed PR Description: $PROCESSED_DESCRIPTION"
       - name: Execute the bash script
         run: |
           pwd
@@ -38,22 +51,6 @@ jobs:
         run: |
           echo "Test Classes: $TEST_CLASSES"
           echo "Test Level: $TEST_LEVEL"
-      - name: Get PR number and PR description
-        run: |
-          PR_NUMBER=${{ github.event.number }}
-          PR_DESCRIPTION=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
-          | jq -r '.body')
-          echo "PR Description: $PR_DESCRIPTION"
-          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
-          echo "Original PR Description: ${PR_DESCRIPTION}"
-          echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
-          echo "PROCESSED_DESCRIPTION=${PROCESSED_DESCRIPTION}" >> $GITHUB_ENV
-          source $GITHUB_ENV
-          echo "Trimmed PR Description: $PROCESSED_DESCRIPTION"
-      - name: Print TestLevel
-        run: |
-          echo "Test level value is: ${{ env.TestLevelValue }}"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
