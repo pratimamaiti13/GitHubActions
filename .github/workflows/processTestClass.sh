@@ -14,7 +14,7 @@ my_function() {
 }
 
 # Call the function with arguments and store the result
-output=$(my_function 5 10)
+output=$(my_function "$1" "$2")
 
 # Print the result
-echo "The result is: $output"
+echo "$output"
