@@ -36,7 +36,7 @@ jobs:
         run: |
           if [ "$(echo "${PROCESSED_DESCRIPTION}" | tr '[:upper:]' '[:lower:]')" = 'runlocaltests' ]; then
             echo "Inside runlocaltest block"
-            echo "TestLevelValue=RunLocalTests" >> $GITHUB_ENV
+            export TestLevelValue=RunLocalTests
             echo "Test level value is: ${TestLevelValue}"
           else
             echo "There is no github tag reference, skipping"
