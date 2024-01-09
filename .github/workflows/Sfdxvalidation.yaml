@@ -52,8 +52,8 @@ jobs:
           echo "Test Level: $TEST_LEVEL"
       - name: Use Results in Another Step
         run: |
-          echo "Test Classes: ${{ TEST_CLASSES }}"
-          echo "Test Level: ${{ TEST_LEVEL }}"
+          echo "Test Classes: ${{ env.TEST_CLASSES }}"
+          echo "Test Level: ${{ env.TEST_LEVEL }}"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
