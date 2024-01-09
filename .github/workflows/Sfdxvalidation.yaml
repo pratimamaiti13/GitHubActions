@@ -21,12 +21,11 @@ jobs:
           jq --version
       - name: Create a function
         run: |
+          python3 - <<EOF
           def evaluateSimpleFunction(entry):
-            return "Hello"
-      - name: Call a function
-        run: |
-          rc = evaluateSimpleFunction(entry)
-          echo "The value of rc is: $rc"
+          return "Hello"
+          print(evaluateSimpleFunction("example"))
+          EOF
       - name: Get PR number and PR description
         run: |
           PR_NUMBER=${{ github.event.number }}
