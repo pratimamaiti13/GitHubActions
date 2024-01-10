@@ -32,19 +32,19 @@ jobs:
           chmod +x .github/workflows/processTestClass.sh
           output=$(.github/workflows/processTestClass.sh "$PROCESSED_DESCRIPTION")
           echo "Output: $output"
-          value1=$(echo "$output" | awk 'NR==1')
-          value2=$(echo "$output" | awk 'NR==2')         
-          echo "Value 1: $value1"
-          echo "Value 2: $value2"
-          echo "value1=${value1}" >> $GITHUB_ENV
-          echo "value2='${value2}'" >> $GITHUB_ENV
+          TestLevel=$(echo "$output" | awk 'NR==1')
+          TestClasses=$(echo "$output" | awk 'NR==2')         
+          echo "1Test Level: $TestLevel"
+          echo "1Test Classes: $TestClasses"
+          echo "TestLevel=${TestLevel}" >> $GITHUB_ENV
+          echo "TestClasses='${TestClasses}'" >> $GITHUB_ENV
           source $GITHUB_ENV
-          echo "Value 1: $value1"
-          echo "Value 2: $value2"
+          echo "2Test Level: $TestLevel"
+          echo "2Test Classes: $TestClasses"
       - name: Use the captured values
         run: |
-          echo "Do something with Value 1: ${{ env.value1 }}"
-          echo "Do something with Value 2: ${{ env.value2 }}"
+          echo "Do something with Test Level: ${{ env.TestLevel }}"
+          echo "Do something with TestClasses: ${{ env.TestClasses }}"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
