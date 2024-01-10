@@ -80,4 +80,5 @@ jobs:
           cat Delta/package/package.xml
       - name: Validation against salesforce
         run: |
+          set -x
           sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level $TestLevel --tests $TestClasses --wait 20 --dry-run --json
