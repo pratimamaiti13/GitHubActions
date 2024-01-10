@@ -27,7 +27,6 @@ jobs:
           | jq -r '.body')
           echo "PR Description: $PR_DESCRIPTION"
           PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
-          echo "Original PR Description: ${PR_DESCRIPTION}"
           echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
           echo "PROCESSED_DESCRIPTION=${PROCESSED_DESCRIPTION}" >> $GITHUB_ENV
           source $GITHUB_ENV
