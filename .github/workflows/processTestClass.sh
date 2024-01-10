@@ -4,32 +4,32 @@
 my_function() {
     local PR_DESCRIPTION=$1
     if [ -z "$PR_DESCRIPTION" ] || [ "$PR_DESCRIPTION" = "null" ]; then
-        TestClasses=""
         TestLevel="NoTestRun"
-        echo "$TestClasses"
+        TestClasses=""
         echo "$TestLevel"
+        echo "$TestClasses"
     elif [ "${PR_DESCRIPTION,,}" = "runlocaltests" ]; then
-        TestClasses=""
         TestLevel="RunLocalTests"
-        echo "$TestClasses"
-        echo "$TestLevel"
-    elif [ "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]; then
         TestClasses=""
-        TestLevel="RunAllTestsInOrg"
-        echo "$TestClasses"
         echo "$TestLevel"
+        echo "$TestClasses"
+    elif [ "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]; then
+        TestLevel="RunAllTestsInOrg"
+        TestClasses=""
+        echo "$TestLevel"
+        echo "$TestClasses"
     elif ! [[ "${PR_DESCRIPTION,,}" = "runlocaltests" || "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]]; then
         TestLevelValue="${PR_DESCRIPTION%% *}"
         if [ "${TestLevelValue,,}" = "runspecifiedtests" ]; then
-            TestClasses="${PR_DESCRIPTION#* }"
             TestLevel="RunSpecifiedTests"
-            echo "$TestClasses"
+            TestClasses="${PR_DESCRIPTION#* }"
             echo "$TestLevel"
+            echo "$TestClasses"
         else
-            TestClasses="NotFound"
             TestLevel="NotFound"
-            echo "$TestClasses"
+            TestClasses="NotFound"
             echo "$TestLevel"
+            echo "$TestClasses"
         fi
     fi
 }
