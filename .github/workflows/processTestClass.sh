@@ -3,18 +3,17 @@
 # Define a function with if-else conditions
 my_function() {
     local PR_DESCRIPTION=$1
-    PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
-    if [ -z "$PROCESSED_DESCRIPTION" ]; then
+    if [ -z "$PR_DESCRIPTION" ]; then
         TestClasses=""
         TestLevel="NoTestRun"
         echo "$TestClasses"
         echo "$TestLevel"
-    elif [ "$PROCESSED_DESCRIPTION" = "runlocaltests" ]; then
+    elif [ "$PR_DESCRIPTION" = "runlocaltests" ]; then
         TestClasses=""
         TestLevel="RunLocalTests"
         echo "$TestClasses"
         echo "$TestLevel"
-    elif [ "$PROCESSED_DESCRIPTION" = "runalltestsinorg" ]; then
+    elif [ "$PR_DESCRIPTION" = "runalltestsinorg" ]; then
         TestClasses=""
         TestLevel="RunAllTestsInOrg"
         echo "$TestClasses"
