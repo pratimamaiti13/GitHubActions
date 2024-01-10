@@ -3,10 +3,7 @@
 # Define a function with if-else conditions
 my_function() {
     local PR_DESCRIPTION=$1
-    echo "PR Description: $PR_DESCRIPTION"
     PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
-    echo "Original PR Description: ${PR_DESCRIPTION}"
-    echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
     if [ -z "$PROCESSED_DESCRIPTION" ]; then
         TestClasses=""
         TestLevel="NoTestRun"
