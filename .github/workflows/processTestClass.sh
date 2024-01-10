@@ -23,6 +23,7 @@ my_function() {
         if [ "${TestLevelValue,,}" = "runspecifiedtests" ]; then
             TestLevel="RunSpecifiedTests"
             TestClasses="${PR_DESCRIPTION#* }"
+            TestClasses=$(echo "${TestClasses//,/ }" | tr -s '[:space:]' ' ')
             echo "$TestLevel"
             echo "$TestClasses"
         else
