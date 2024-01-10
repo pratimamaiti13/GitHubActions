@@ -28,7 +28,7 @@ jobs:
           echo "PR Description: $PR_DESCRIPTION"
           PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
           echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
-          echo "PROCESSED_DESCRIPTION=${PROCESSED_DESCRIPTION}" >> $GITHUB_ENV
+          echo "PROCESSED_DESCRIPTION='${PROCESSED_DESCRIPTION}'" >> $GITHUB_ENV
           source $GITHUB_ENV
           echo "Trimmed PR Description: $PROCESSED_DESCRIPTION"
       - name: Run script and capture output
