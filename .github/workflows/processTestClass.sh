@@ -3,7 +3,7 @@
 # Define a function with if-else conditions
 my_function() {
     local PR_DESCRIPTION=$1
-    if [ -z "$PR_DESCRIPTION" ]; then
+    if [ -z "$PR_DESCRIPTION" ] || [ "$PR_DESCRIPTION" = "null" ]; then
         TestClasses=""
         TestLevel="NoTestRun"
         echo "$TestClasses"
