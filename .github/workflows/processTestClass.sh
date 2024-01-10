@@ -21,9 +21,8 @@ my_function() {
     elif ! [[ "${PR_DESCRIPTION,,}" = "runlocaltests" || "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]]; then
         TestLevelValue="${PR_DESCRIPTION%% *}"
         TestClassesValue=$(echo "$PR_DESCRIPTION" | awk '{sub(/[^ ]* /, ""); print}')
-        echo "$TestClassesValue"
         if [ "${TestLevelValue,,}" = "runspecifiedtests" ]; then
-            TestClasses=""
+            TestClasses="$TestClassesValue"
             TestLevel="RunSpecifiedTests"
             echo "$TestClasses"
             echo "$TestLevel"
