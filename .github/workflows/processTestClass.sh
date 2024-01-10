@@ -18,9 +18,19 @@ my_function() {
         TestLevel="RunAllTestsInOrg"
         echo "$TestClasses"
         echo "$TestLevel"
-    else
-        echo "default_value1"
-        echo "default_value2"
+    elif ! [[ "${PR_DESCRIPTION,,}" = "runlocaltests" || "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]]; then
+        TestLevelValue="${PR_DESCRIPTION%% *}"
+        if [ "${TestLevelValue,,}" = "runspecifiedtests" ]; then
+            TestClasses=""
+            TestLevel="RunSpecifiedTests"
+            echo "$TestClasses"
+            echo "$TestLevel"
+        else
+            TestClasses="NotFound"
+            TestLevel="NotFound"
+            echo "$TestClasses"
+            echo "$TestLevel"
+        fi
     fi
 }
 
