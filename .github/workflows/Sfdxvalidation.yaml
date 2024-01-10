@@ -36,7 +36,7 @@ jobs:
         id: myscript
         run: |
           chmod +x .github/workflows/processTestClass.sh
-          output=$(.github/workflows/processTestClass.sh "string_condition1")
+          output=$(.github/workflows/processTestClass.sh "string_condition2")
           value1=$(echo "$output" | awk 'NR==1 {print $1}')
           value2=$(echo "$output" | awk 'NR==2 {print $1}')          
           echo "Value 1: $value1"
