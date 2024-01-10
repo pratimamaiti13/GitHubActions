@@ -19,7 +19,8 @@ my_function() {
         echo "$TestClasses"
         echo "$TestLevel"
     elif ! [[ "${PR_DESCRIPTION,,}" = "runlocaltests" || "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]]; then
-        TestLevelValue="${PR_DESCRIPTION%% *}"
+        IFS=$'\n' read -r -a lines <<< "$description"
+        TestLevelValue=$(echo "$description" | awk '{print $1}')
         echo "$TestLevelValue"
         if [ "${TestLevelValue,,}" = "runspecifiedtests" ]; then
             TestClasses=""
