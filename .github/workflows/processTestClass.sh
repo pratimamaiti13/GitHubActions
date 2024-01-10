@@ -20,7 +20,7 @@ my_function() {
         echo "$TestLevel"
     elif ! [[ "${PR_DESCRIPTION,,}" = "runlocaltests" || "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]]; then
         TestLevelValue="${PR_DESCRIPTION%% *}"
-        TestClassesValue="${PR_DESCRIPTION#* }"
+        TestClassesValue="${PR_DESCRIPTION#*${TestLevelValue} }"
         echo "$TestClassesValue"
         if [ "${TestLevelValue,,}" = "runspecifiedtests" ]; then
             TestClasses=""
