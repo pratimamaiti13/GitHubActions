@@ -8,7 +8,7 @@ my_function() {
         TestLevel="NoTestRun"
         echo "$TestClasses"
         echo "$TestLevel"
-    elif [ "$PR_DESCRIPTION" = "runlocaltests" ]; then
+    elif [ "${PR_DESCRIPTION,,}" = "runlocaltests" ]; then
         TestClasses=""
         TestLevel="RunLocalTests"
         echo "$TestClasses"
