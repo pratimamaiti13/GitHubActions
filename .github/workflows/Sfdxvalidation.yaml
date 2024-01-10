@@ -49,7 +49,7 @@ jobs:
       - name: Use the captured values
         run: |
           echo "Do something with Value 1: ${{ env.value1 }}"
-          echo "Do something with Value 2: ${{ env.value1 }}"
+          echo "Do something with Value 2: ${{ env.value2 }}"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
