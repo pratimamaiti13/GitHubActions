@@ -81,6 +81,6 @@ jobs:
       - name: Validation against salesforce
         run: |
           set -x
-          TestClassestoBeUsed = $(echo "$TestClasses" | sed "s/'//g")
+          TestClassestoBeUsed=$(echo "$TestClasses" | sed "s/'//g")
           echo "Test classes to be passed: $TestClassestoBeUsed"
           sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level RunSpecifiedTests --tests "$TestClassestoBeUsed" --wait 20 --dry-run --json
