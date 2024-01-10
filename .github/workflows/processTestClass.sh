@@ -13,7 +13,7 @@ my_function() {
         TestLevel="RunLocalTests"
         echo "$TestClasses"
         echo "$TestLevel"
-    elif [ "$PR_DESCRIPTION" = "runalltestsinorg" ]; then
+    elif [ "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]; then
         TestClasses=""
         TestLevel="RunAllTestsInOrg"
         echo "$TestClasses"
