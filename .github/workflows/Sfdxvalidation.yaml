@@ -30,6 +30,7 @@ jobs:
           echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
           chmod +x .github/workflows/processTestClass.sh
           output=$(.github/workflows/processTestClass.sh "$PROCESSED_DESCRIPTION")
+          echo "Output: $output"
           value1=$(echo "$output" | awk 'NR==1 {print $1}')
           value2=$(echo "$output" | awk 'NR==2 {print $1}')          
           echo "Value 1: $value1"
