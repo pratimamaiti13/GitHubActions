@@ -7,8 +7,8 @@ my_function() {
     if [ -z "$description" ]; then
         TestClasses=""
         TestLevel="NoTestRun"
-        echo "TestClasses"
-        echo "TestLevel"
+        echo "$TestClasses"
+        echo "$TestLevel"
     elif [ "$description" = "string_condition2" ]; then
         echo "value1b"
         echo "value2b"
