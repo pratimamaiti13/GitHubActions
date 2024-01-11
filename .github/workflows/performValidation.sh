@@ -2,6 +2,7 @@
 
 # Define a function with if-else conditions
 perform_validation() {
+    set -x
     local TestLevel=$1
     local TestClasses=$2
     if [ "${TestLevel}" = "NoTestRun" ]; then
