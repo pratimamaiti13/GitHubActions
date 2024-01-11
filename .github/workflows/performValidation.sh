@@ -2,7 +2,8 @@
 perform_validation() {
     set -x
     args=("$@")
-    echo ${args[0]}
+    local TestLevel=${args[0]}
+    local TestClasses=${args[1]}
     echo ${args[1]}
     if [ ${TestLevel} = "NoTestRun" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
