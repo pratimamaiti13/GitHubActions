@@ -7,9 +7,8 @@ perform_validation() {
     local TestClasses=$2
     if [ ${TestLevel} = "NoTestRun" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
-    elif [ "${PR_DESCRIPTION,,}" = "runlocaltests" ]; then
-        TestLevel="RunLocalTests"
-        TestClasses=""
+    elif [ ${TestLevel} = "RunLocalTests" ] || [ ${TestLevel} = "RunAllTestsInOrg" ]; then
+        sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level $TestLevel --wait 20 --dry-run --json
     elif [ "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]; then
         TestLevel="RunAllTestsInOrg"
         TestClasses=""
@@ -24,8 +23,6 @@ perform_validation() {
             TestClasses="NotFound"
         fi
     fi
-    echo "$TestLevel"
-    echo "$TestClasses"
 }
 
 # Call the function with arguments
