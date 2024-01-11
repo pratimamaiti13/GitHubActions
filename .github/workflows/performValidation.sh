@@ -1,8 +1,11 @@
 #!/bin/bash
 perform_validation() {
     set -x
-    local TestLevel=$1
-    local TestClasses="$2"
+    eval TestLevel="$1"
+    eval TestClasses="$2"
+    echo "string1 = ${TestLevel}"
+    echo "string2 = ${TestLevel}"
+ TestClasses="$2"
     if [ ${TestLevel} = "NoTestRun" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
     elif [ ${TestLevel} = "RunLocalTests" ] || [ ${TestLevel} = "RunAllTestsInOrg" ]; then
@@ -13,4 +16,6 @@ perform_validation() {
         echo "Test level and test class value are not correct."
     fi
 }
-perform_validation "$1 $2"
+var1="firstString"
+var2="second string with spaces"
+perform_validation "\${var1}" "\${var2}"
