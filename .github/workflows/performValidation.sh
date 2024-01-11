@@ -4,7 +4,7 @@
 perform_validation() {
     local TestLevel=$1
     local TestClasses=$2
-    if [ TestLevel = "NoTestRun" ]; then
+    if [ "${TestLevel}" = "NoTestRun" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
     elif [ "${PR_DESCRIPTION,,}" = "runlocaltests" ]; then
         TestLevel="RunLocalTests"
