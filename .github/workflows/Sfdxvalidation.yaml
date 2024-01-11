@@ -74,4 +74,4 @@ jobs:
           source $GITHUB_ENV
           echo "Test Level in Env: $TestLevelEnv"
           echo "Test Classes in Env: $TestClassesEnv"
-          sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level $TestLevel --wait 20 --dry-run --json
+          bash .github/workflows/performValidation.sh "$TestLevel" "$TestClasses")
