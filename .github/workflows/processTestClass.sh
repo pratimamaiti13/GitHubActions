@@ -1,6 +1,4 @@
 #!/bin/bash
-
-# Define a function with if-else conditions
 my_function() {
     local PR_DESCRIPTION=$1
     if [ -z "$PR_DESCRIPTION" ] || [ "$PR_DESCRIPTION" = "null" ]; then
@@ -26,6 +24,4 @@ my_function() {
     echo "$TestLevel"
     echo "$TestClasses"
 }
-
-# Call the function with arguments
 my_function "$1"

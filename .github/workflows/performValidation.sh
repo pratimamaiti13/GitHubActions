@@ -1,6 +1,4 @@
 #!/bin/bash
-
-# Define a function with if-else conditions
 perform_validation() {
     set -x
     local TestLevel=$1
@@ -9,21 +7,10 @@ perform_validation() {
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
     elif [ ${TestLevel} = "RunLocalTests" ] || [ ${TestLevel} = "RunAllTestsInOrg" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level $TestLevel --wait 20 --dry-run --json
-    elif [ "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]; then
-        TestLevel="RunAllTestsInOrg"
-        TestClasses=""
-    elif ! [[ "${PR_DESCRIPTION,,}" = "runlocaltests" || "${PR_DESCRIPTION,,}" = "runalltestsinorg" ]]; then
-        TestLevelValue="${PR_DESCRIPTION%% *}"
-        if [ "${TestLevelValue,,}" = "runspecifiedtests" ]; then
-            TestLevel="RunSpecifiedTests"
-            TestClasses="${PR_DESCRIPTION#* }"
-            TestClasses=$(echo "${TestClasses//,/ }" | tr -s '[:space:]' ' ' | awk '{$1=$1};1')
-        else
-            TestLevel="NotFound"
-            TestClasses="NotFound"
-        fi
+    elif [ ${TestLevel} = "RunSpecifiedTests" ]; then
+        sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level $TestLevel --tests $TestClasses --wait 20 --dry-run --json
+    else
+        echo "Test level and test class value are not correct."
     fi
 }
-
-# Call the function with arguments
 perform_validation "$1 $2"
