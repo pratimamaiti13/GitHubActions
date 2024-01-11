@@ -19,32 +19,6 @@ jobs:
         run: |
           sudo apt install -y jq
           jq --version
-      - name: Get PR number and PR description
-        run: |
-          set -x
-          PR_NUMBER=${{ github.event.number }}
-          PR_DESCRIPTION=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-          "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
-          | jq -r '.body')
-          echo "PR Description: $PR_DESCRIPTION"
-          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
-          echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
-          chmod +x .github/workflows/processTestClass.sh
-          output=$(.github/workflows/processTestClass.sh "$PROCESSED_DESCRIPTION")
-          echo "Output: $output"
-          TestLevel=$(echo "$output" | awk 'NR==1')
-          TestClasses=$(echo "$output" | awk 'NR==2')         
-          echo "1Test Level: $TestLevel"
-          echo "1Test Classes: $TestClasses"
-          echo "TestLevel=${TestLevel}" >> $GITHUB_ENV
-          echo "TestClasses='${TestClasses}'" >> $GITHUB_ENV
-          source $GITHUB_ENV
-          echo "2Test Level: $TestLevel"
-          echo "2Test Classes: $TestClasses"
-      - name: Use the captured values
-        run: |
-          echo "Do something with Test Level: ${{ env.TestLevel }}"
-          echo "Do something with TestClasses: ${{ env.TestClasses }}"
       - name: Install node js
         uses: actions/setup-node@v3
         with:
@@ -81,6 +55,23 @@ jobs:
       - name: Validation against salesforce
         run: |
           set -x
-          TestClassestoBeUsed=$(echo "$TestClasses" | sed "s/'//g")
-          echo "Test classes to be passed: $TestClassestoBeUsed"
-          sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level $TestLevel --tests $TestClassestoBeUsed --wait 20 --dry-run --json
+          PR_NUMBER=${{ github.event.number }}
+          PR_DESCRIPTION=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
+          | jq -r '.body')
+          echo "PR Description: $PR_DESCRIPTION"
+          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
+          echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
+          chmod +x .github/workflows/processTestClass.sh
+          output=$(.github/workflows/processTestClass.sh "$PROCESSED_DESCRIPTION")
+          echo "Output: $output"
+          TestLevel=$(echo "$output" | awk 'NR==1')
+          TestClasses=$(echo "$output" | awk 'NR==2')         
+          echo "Test Level to be passed: $TestLevel"
+          echo "Test Classes to be passed: $TestClasses"
+          echo "TestLevelEnv=${TestLevel}" >> $GITHUB_ENV
+          echo "TestClassesEnv='${TestClasses}'" >> $GITHUB_ENV
+          source $GITHUB_ENV
+          echo "Test Level in Env: $TestLevelEnv"
+          echo "Test Classes in Env: $TestClassesEnv"
+          sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --test-level $TestLevel --tests $TestClasses --wait 20 --dry-run --json
