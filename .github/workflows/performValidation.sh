@@ -1,7 +1,7 @@
 #!/bin/bash
 perform_validation() {
     set -x
-    local TestLevel="$1"
+    local TestLevel=$1
     local TestClasses="$2"
     if [ ${TestLevel} = "NoTestRun" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
