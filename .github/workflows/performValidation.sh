@@ -5,7 +5,6 @@ perform_validation() {
     eval TestClasses="$2"
     echo "string1 = ${TestLevel}"
     echo "string2 = ${TestClasses}"
- TestClasses="$2"
     if [ ${TestLevel} = "NoTestRun" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
     elif [ ${TestLevel} = "RunLocalTests" ] || [ ${TestLevel} = "RunAllTestsInOrg" ]; then
@@ -18,4 +17,4 @@ perform_validation() {
 }
 var1="firstString"
 var2="second string with spaces"
-perform_validation "\${var1}" "\${var2}"
+perform_validation "\${TestLevel}" "\${TestClasses}"
