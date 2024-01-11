@@ -74,4 +74,4 @@ jobs:
           source $GITHUB_ENV
           echo "Test Level in Env: $TestLevelEnv"
           echo "Test Classes in Env: $TestClassesEnv"
-          bash .github/workflows/performValidation.sh "RunSpecifiedTests" "\"TaskUtilTest TemperatureConverterTest\""
+          bash .github/workflows/performValidation.sh "RunSpecifiedTests" "TaskUtilTest TemperatureConverterTest"
