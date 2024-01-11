@@ -4,7 +4,7 @@ perform_validation() {
     eval TestLevel="$1"
     eval TestClasses="$2"
     echo "string1 = ${TestLevel}"
-    echo "string2 = ${TestLevel}"
+    echo "string2 = ${TestClasses}"
  TestClasses="$2"
     if [ ${TestLevel} = "NoTestRun" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org pratimamaiti@nagarro.com --wait 20 --dry-run --json
