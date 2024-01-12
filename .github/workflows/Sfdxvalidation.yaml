@@ -5,9 +5,7 @@ on:
     types:
       - opened
       - reopened
-    paths:
-      - 'dev/**'
-      - 'uat/**'
+    branches: [ 'dev', 'uat' ]
 jobs:
   sfdx-validation:
     runs-on: ubuntu-latest 
