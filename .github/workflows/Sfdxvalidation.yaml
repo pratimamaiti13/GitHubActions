@@ -6,7 +6,7 @@ on:
       - opened
       - reopened
     branches:
-      - dev
+      - [ dev, uat]
 jobs:
   sfdx-validation:
     runs-on: ubuntu-latest 
@@ -28,13 +28,8 @@ jobs:
           npm --version
       - name: Install salesforce cli
         run: |
-          wget https://developer.salesforce.com/media/salesforce-cli/sf/channels/stable/sf-linux-x64.tar.xz
-          echo "present working directory is -----------------------"
-          pwd
-          mkdir -p ~/cli/sf
-          tar xJf sf-linux-x64.tar.xz -C ~/cli/sf --strip-components 1
-          echo "~/cli/sf/bin" >> $GITHUB_PATH
-          ~/cli/sf/bin/sf --version 
+          npm install -g @salesforce/cli
+          sf -v
       - name: Authorize with salesforce org
         run: |
           echo "${{ secrets.SERVER_KEY_FILE }}" > server.key
