@@ -15,7 +15,7 @@ jobs:
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 5
       - name: Install jq
         run: |
           sudo apt install -y jq
