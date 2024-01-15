@@ -73,5 +73,5 @@ jobs:
           bash .github/workflows/performValidation.sh "$TestLevel" "$TestClasses"
       - name: Merge source branch into Target branch
         run: |
-          echo "The base branch is: ${{ github.base_ref }}"
-          echo "Target branch is: ${{ github.head_ref }}"
+          echo "The base branch is: ${{ github.event.pull_request.base.ref }}"
+          echo "Target branch is: ${{ github.event.pull_request.head.ref }}"
