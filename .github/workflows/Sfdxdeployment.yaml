@@ -70,7 +70,7 @@ jobs:
           source $GITHUB_ENV
           echo "Test Level in Env: $TestLevelEnv"
           echo "Test Classes in Env: $TestClassesEnv"
-          bash .github/workflows/performValidation.sh "$TestLevel" "$TestClasses"
+          bash .github/workflows/performDeployment.sh "$TestLevel" "$TestClasses"
       - name: Merge source branch into Target branch
         run: |
           echo "The base branch is: ${{ github.event.pull_request.base.ref }}"
