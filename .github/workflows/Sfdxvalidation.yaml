@@ -71,3 +71,7 @@ jobs:
           echo "Test Level in Env: $TestLevelEnv"
           echo "Test Classes in Env: $TestClassesEnv"
           bash .github/workflows/performValidation.sh "$TestLevel" "$TestClasses"
+      - name: Merge source branch into Target branch
+        run: |
+          echo "The base branch is: ${{ github.base_ref }}"
+          echo "Target branch is: ${{ github.head_ref }}"
