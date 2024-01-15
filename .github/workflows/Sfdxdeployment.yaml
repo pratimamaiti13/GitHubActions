@@ -1,0 +1,76 @@
+name: sfdx-validation-on-PR
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: 
+  pull_request_review:
+    types:
+      - submitted
+    branches:
+      - dev
+      - uat
+jobs:
+  sfdx-validation:
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Checkout scm
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install jq
+        run: |
+          sudo apt install -y jq
+          jq --version
+      - name: Install node js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: |
+          node --version
+          npm --version
+      - name: Install salesforce cli
+        run: |
+          npm install -g @salesforce/cli
+          sf -v
+      - name: Authorize with salesforce org
+        run: |
+          echo "${{ secrets.SERVER_KEY_FILE }}" > server.key
+          sf auth:jwt:grant --instance-url https://login.salesforce.com/ --username pratimamaiti@nagarro.com --client-id 3MVG9pRzvMkjMb6kNn45Qi9K2FLiCMPaUlgi9jHEcgHqZSVlMWwhpHmn8T4VINYFTBYElbS0KV0GyvDfS2MOg --jwt-key-file server.key
+      - name: Install sfdx git delta plugin
+        run: echo y | sf plugins:install sfdx-git-delta
+      - name: Display checked-out branch
+        run: |
+          echo "Checked-out branch: ${{ github.ref }}"
+      - name: Create delta package for deployment
+        run: |
+          mkdir Delta
+          git branch
+          sf sgd:source:delta --to HEAD --from HEAD~1 --output Delta
+          ls
+          cat Delta/destructiveChanges/destructiveChanges.xml
+          cat Delta/package/package.xml
+      - name: Validation against salesforce
+        run: |
+          set -x
+          PR_NUMBER=${{ github.event.number }}
+          PR_DESCRIPTION=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
+          | jq -r '.body')
+          echo "PR Description: $PR_DESCRIPTION"
+          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
+          echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
+          chmod +x .github/workflows/processTestClass.sh
+          output=$(.github/workflows/processTestClass.sh "$PROCESSED_DESCRIPTION")
+          echo "Output: $output"
+          TestLevel=$(echo "$output" | awk 'NR==1')
+          TestClasses=$(echo "$output" | awk 'NR==2')         
+          echo "Test Level to be passed: $TestLevel"
+          echo "Test Classes to be passed: $TestClasses"
+          echo "TestLevelEnv=${TestLevel}" >> $GITHUB_ENV
+          echo "TestClassesEnv='${TestClasses}'" >> $GITHUB_ENV
+          source $GITHUB_ENV
+          echo "Test Level in Env: $TestLevelEnv"
+          echo "Test Classes in Env: $TestClassesEnv"
+          bash .github/workflows/performValidation.sh "$TestLevel" "$TestClasses"
+      - name: Merge source branch into Target branch
+        run: |
+            echo "The base branch is: {github.base_ref}"
+            echo "Target branch is: {github.head_ref}"
