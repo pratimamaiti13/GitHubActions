@@ -33,7 +33,7 @@ jobs:
           sf -v
       - name: Authorize with salesforce org
         run: |
-          echo "${{ secrets.SERVER_KEY_FILE }}" > server.key
+          echo "${{ secrets.ENCODED_SERVER_KEY }}" | base64 -d > server.key
           sf auth:jwt:grant --instance-url https://login.salesforce.com/ --username pratimamaiti@nagarro.com --client-id 3MVG9pRzvMkjMb6kNn45Qi9K2FLiCMPaUlgi9jHEcgHqZSVlMWwhpHmn8T4VINYFTBYElbS0KV0GyvDfS2MOg --jwt-key-file server.key
       - name: Install sfdx git delta plugin
         run: echo y | sf plugins:install sfdx-git-delta
