@@ -75,5 +75,7 @@ jobs:
         run: |
           echo "The base branch is: ${{ github.event.pull_request.base.ref }}"
           echo "Source branch is: ${{ github.event.pull_request.head.ref }}"
+          git config --local user.email "pratima.maiti77@gmail.com"
+          git config --local user.name "pratimamaiti13"
           git checkout ${{ github.event.pull_request.base.ref }}
           git merge origin/${{ github.event.pull_request.head.ref }}
