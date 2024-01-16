@@ -75,4 +75,5 @@ jobs:
         run: |
           echo "The base branch is: ${{ github.event.pull_request.base.ref }}"
           echo "Source branch is: ${{ github.event.pull_request.head.ref }}"
-          git merge ${{ github.event.pull_request.head.ref }} ${{ github.event.pull_request.base.ref }}
+          git checkout ${{ github.event.pull_request.base.ref }
+          git merge origin/${{ github.event.pull_request.head.ref }}
