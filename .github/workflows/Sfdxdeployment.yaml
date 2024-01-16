@@ -48,7 +48,7 @@ jobs:
           ls
           cat Delta/destructiveChanges/destructiveChanges.xml
           cat Delta/package/package.xml
-      - name: Validation against salesforce
+      - name: Deployment to salesforce
         run: |
           set -x
           PR_NUMBER=${{ github.event.number }}
@@ -74,4 +74,5 @@ jobs:
       - name: Merge source branch into Target branch
         run: |
           echo "The base branch is: ${{ github.event.pull_request.base.ref }}"
-          echo "Target branch is: ${{ github.event.pull_request.head.ref }}"
+          echo "Source branch is: ${{ github.event.pull_request.head.ref }}"
+          git merge ${{ github.event.pull_request.head.ref }} ${{ github.event.pull_request.base.ref }}
