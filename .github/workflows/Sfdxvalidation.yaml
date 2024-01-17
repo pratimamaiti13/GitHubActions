@@ -8,6 +8,8 @@ on:
     branches:
       - dev
       - uat
+concurrency:
+  group: ${{ github.event_name }}-${{ github.event.ref }}
 jobs:
   sfdx-validation:
     runs-on: ubuntu-latest 
