@@ -50,6 +50,8 @@ jobs:
           ls
           cat Delta/destructiveChanges/destructiveChanges.xml
           cat Delta/package/package.xml
+      - name: Install SFDX Scanner
+        run: sfdx plugins:install @salesforce/sfdx-scanner
       - name: Validation against salesforce
         run: |
           set -x
