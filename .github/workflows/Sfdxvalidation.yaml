@@ -8,6 +8,8 @@ on:
     branches:
       - dev
       - uat
+concurrency:
+  group: ${{ github.event_name }}-${{ github.event.ref }}
 jobs:
   sfdx-validation:
     runs-on: ubuntu-latest 
@@ -48,6 +50,15 @@ jobs:
           ls
           cat Delta/destructiveChanges/destructiveChanges.xml
           cat Delta/package/package.xml
+      - name: Install SFDX Scanner
+        run: sfdx plugins:install @salesforce/sfdx-scanner
+      - name: Run SFDX Scanner - Report findings as comments
+        uses: mitchspano/sfdx-scan-pull-request@v0.1.15
+        with:
+          severity-threshold: 4
+          strictly-enforced-rules: '[{ "engine": "pmd", "category": "Performance", "rule": "AvoidDebugStatements" }]'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Validation against salesforce
         run: |
           set -x
