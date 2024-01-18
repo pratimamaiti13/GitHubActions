@@ -52,14 +52,13 @@ jobs:
           cat Delta/package/package.xml
       - name: Install SFDX Scanner
         run: sfdx plugins:install @salesforce/sfdx-scanner
-      - name: Code scan
-        run: sfdx scanner:run --format html --target './Delta/**/*.cls' --category
-          'Design,Best Practices,Performance,Code Style,Security' --outfile
-          'apexScanResults.html'
-      - uses: actions/upload-artifact@v3
+      - name: Run SFDX Scanner - Report findings as comments
+        uses: mitchspano/sfdx-scan-pull-request
         with:
-          name: cli-scan-report
-          path: apexScanResults.html
+          severity-threshold: 4
+          strictly-enforced-rules: '[{ "engine": "pmd", "category": "Performance", "rule": "AvoidDebugStatements" }]'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Validation against salesforce
         run: |
           set -x
