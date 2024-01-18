@@ -52,6 +52,14 @@ jobs:
           cat Delta/package/package.xml
       - name: Install SFDX Scanner
         run: sfdx plugins:install @salesforce/sfdx-scanner
+      - name: Code scan
+        run: sfdx scanner:run --format html --target './Delta/**/*.cls' --category
+          'Design,Best Practices,Performance,Code Style,Security' --outfile
+          'apexScanResults.html'
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cli-scan-report
+          path: apexScanResults.html
       - name: Validation against salesforce
         run: |
           set -x
