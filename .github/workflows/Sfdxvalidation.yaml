@@ -26,9 +26,10 @@ jobs:
                 "SF_CONSUMER_KEY": "${{ secrets.SF_CONSUMER_KEY_DEV }}"
               },
               "master": {
-                "environment": "staging",
-                "AWS_ACCESS_KEY_ID": "${{ secrets.STG_AWS_ACCESS_KEY_ID }}",
-                "AWS_SECRET_ACCESS_KEY": "${{ secrets.STG_AWS_ACCESS_KEY_ID }}"
+                "environment": "Production",
+                "SF_USERNAME": "${{ vars.SF_USERNAME_PROD }}",
+                "SF_INSTANCE_URL": "${{ vars.SF_INSTANCE_URL_PROD }}",
+                "SF_CONSUMER_KEY": "${{ secrets.SF_CONSUMER_KEY_PROD }}"
               }
             }
       - name: Echo environment
