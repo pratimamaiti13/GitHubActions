@@ -37,10 +37,10 @@ jobs:
         run: |
           set -x
           echo "${{github.base_ref}}"
-          echo ${{ environment }}
-          echo ${{ SF_USERNAME }}
-          echo ${{ SF_INSTANCE_URL }}
-          echo ${{ SF_CONSUMER_KEY }}
+          echo ${{ env.environment }}
+          echo ${{ env.SF_USERNAME }}
+          echo ${{ env.SF_INSTANCE_URL }}
+          echo ${{ env.SF_CONSUMER_KEY }}
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
