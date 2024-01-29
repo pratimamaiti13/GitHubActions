@@ -14,6 +14,29 @@ jobs:
   sfdx-validation:
     runs-on: ubuntu-latest 
     steps:
+      - uses: kanga333/variable-mapper@master
+        with:
+          key: "${{github.base_ref}}"
+          map: |
+            {
+              "master": {
+                "environment": "production",
+                "AWS_ACCESS_KEY_ID": "${{ secrets.PROD_AWS_ACCESS_KEY_ID }}",
+                "AWS_SECRET_ACCESS_KEY": "${{ secrets.PROD_AWS_ACCESS_KEY_ID }}"
+              },
+              "staging": {
+                "environment": "staging",
+                "AWS_ACCESS_KEY_ID": "${{ secrets.STG_AWS_ACCESS_KEY_ID }}",
+                "AWS_SECRET_ACCESS_KEY": "${{ secrets.STG_AWS_ACCESS_KEY_ID }}"
+              },
+              ".*": {
+                "environment": "development",
+                "AWS_ACCESS_KEY_ID": "${{ secrets.DEV_AWS_ACCESS_KEY_ID }}",
+                "AWS_SECRET_ACCESS_KEY": "${{ secrets.DEV_AWS_ACCESS_KEY_ID }}"
+              }
+            }
+      - name: Echo environment
+        run: echo ${{ env.environment }}
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
@@ -53,10 +76,7 @@ jobs:
       - name: Install SFDX Scanner
         run: sfdx plugins:install @salesforce/sfdx-scanner
       - name: Run SFDX Scanner - Report findings as comments
-        run: |
-          echo "GitHub even before is : ${{ github.event.before }}"
-          echo "GitHub SHA: ${{ github.sha }}"
-          sfdx scanner:run -f $(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+        run: sfdx scanner:run -f $(git diff --name-only HEAD~1 HEAD)
       - name: Validation against salesforce
         run: |
           set -x
