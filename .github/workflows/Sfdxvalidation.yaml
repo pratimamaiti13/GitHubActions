@@ -8,6 +8,7 @@ on:
     branches:
       - dev
       - uat
+      - master
 concurrency:
   group: ${{ github.event_name }}-${{ github.event.ref }}
 jobs:
