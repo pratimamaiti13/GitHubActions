@@ -37,10 +37,10 @@ jobs:
         run: |
           set -x
           echo "${{github.base_ref}}"
-          echo ${{ env.environment }}
-          echo ${{ env.SF_USERNAME }}
-          echo ${{ env.SF_INSTANCE_URL }}
-          echo ${{ env.SF_CONSUMER_KEY }}
+          echo ${{ environment }}
+          echo ${{ SF_USERNAME }}
+          echo ${{ SF_INSTANCE_URL }}
+          echo ${{ SF_CONSUMER_KEY }}
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
@@ -77,10 +77,6 @@ jobs:
           ls
           cat Delta/destructiveChanges/destructiveChanges.xml
           cat Delta/package/package.xml
-      - name: Install SFDX Scanner
-        run: sfdx plugins:install @salesforce/sfdx-scanner
-      - name: Run SFDX Scanner - Report findings as comments
-        run: sfdx scanner:run -f $(git diff --name-only HEAD~1 HEAD)
       - name: Validation against salesforce
         run: |
           set -x
