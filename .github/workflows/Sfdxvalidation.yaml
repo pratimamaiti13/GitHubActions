@@ -1,0 +1,110 @@
+name: sfdx-validation-on-PR
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: 
+  pull_request:
+    types:
+      - opened
+      - reopened
+    branches:
+      - dev
+      - uat
+      - master
+concurrency:
+  group: ${{ github.event_name }}-${{ github.event.ref }}
+jobs:
+  sfdx-validation:
+    runs-on: ubuntu-latest 
+    steps:
+      - uses: kanga333/variable-mapper@master
+        with:
+          key: "${{github.base_ref}}"
+          map: |
+            {
+              "dev": {
+                "environment": "Development",
+                "SF_USERNAME": "${{ vars.SF_USERNAME_DEV }}",
+                "SF_INSTANCE_URL": "${{ vars.SF_INSTANCE_URL_DEV }}",
+                "SF_CONSUMER_KEY": "${{ secrets.SF_CONSUMER_KEY_DEV }}"
+              },
+              "master": {
+                "environment": "Production",
+                "SF_USERNAME": "${{ vars.SF_USERNAME_PROD }}",
+                "SF_INSTANCE_URL": "${{ vars.SF_INSTANCE_URL_PROD }}",
+                "SF_CONSUMER_KEY": "${{ secrets.SF_CONSUMER_KEY_PROD }}"
+              }
+            }
+      - name: Echo environment
+        run: |
+          set -x
+          echo "${{github.base_ref}}"
+          echo ${{ env.environment }}
+          echo ${{ env.SF_USERNAME }}
+          echo ${{ env.SF_INSTANCE_URL }}
+          echo ${{ env.SF_CONSUMER_KEY }}
+      - name: Checkout scm
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install jq
+        run: |
+          sudo apt install -y jq
+          jq --version
+      - name: Install node js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - run: |
+          node --version
+          npm --version
+      - name: Install salesforce cli
+        run: |
+          npm install -g @salesforce/cli
+          sf -v
+      - name: Authorize with salesforce org
+        run: |
+          echo "${{ secrets.ENCODED_SERVER_KEY }}" | base64 -d > server.key
+          sf auth:jwt:grant --instance-url ${{ env.SF_INSTANCE_URL }} --username ${{ env.SF_USERNAME }} --client-id ${{ env.SF_CONSUMER_KEY }} --jwt-key-file server.key
+      - name: Install sfdx git delta plugin
+        run: echo y | sf plugins:install sfdx-git-delta
+      - name: Display checked-out branch
+        run: |
+          echo "Checked-out branch: ${{ github.ref }}"
+      - name: Create delta package for deployment
+        run: |
+          mkdir Delta
+          git branch
+          sf sgd:source:delta --to HEAD --from HEAD~1 --output Delta
+          ls
+          cat Delta/destructiveChanges/destructiveChanges.xml
+          cat Delta/package/package.xml
+      - name: Install SFDX Scanner
+        run: sfdx plugins:install @salesforce/sfdx-scanner
+      - name: Run SFDX Scanner - Report findings as comments
+        run: sfdx scanner:run -f $(git diff --name-only HEAD~1 HEAD)
+      - name: Validation against salesforce
+        run: |
+          set -x
+          PR_NUMBER=${{ github.event.number }}
+          PR_DESCRIPTION=$(curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          "https://api.github.com/repos/${{ github.repository }}/pulls/${PR_NUMBER}" \
+          | jq -r '.body')
+          echo "PR Description: $PR_DESCRIPTION"
+          PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
+          echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
+          chmod +x .github/workflows/processTestClass.sh
+          output=$(.github/workflows/processTestClass.sh "$PROCESSED_DESCRIPTION")
+          echo "Output: $output"
+          TestLevel=$(echo "$output" | awk 'NR==1')
+          TestClasses=$(echo "$output" | awk 'NR==2')         
+          echo "Test Level to be passed: $TestLevel"
+          echo "Test Classes to be passed: $TestClasses"
+          echo "TestLevelEnv=${TestLevel}" >> $GITHUB_ENV
+          echo "TestClassesEnv='${TestClasses}'" >> $GITHUB_ENV
+          source $GITHUB_ENV
+          echo "Test Level in Env: $TestLevelEnv"
+          echo "Test Classes in Env: $TestClassesEnv"
+          bash .github/workflows/performValidation.sh "$TestLevel" "$TestClasses"
+      - name: Merge source branch into Target branch
+        run: |
+          echo "The base branch is: ${{ github.base_ref }}"
+          echo "Target branch is: ${{ github.head_ref }}"
