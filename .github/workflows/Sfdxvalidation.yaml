@@ -35,8 +35,12 @@ jobs:
                 "AWS_SECRET_ACCESS_KEY": "${{ secrets.DEV_AWS_ACCESS_KEY_ID }}"
               }
             }
+            echo "${{github.base_ref}}"
       - name: Echo environment
-        run: echo ${{ env.environment }}
+        run: |
+          set -x
+          echo "${{github.base_ref}}"
+          echo ${{ env.environment }}
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
