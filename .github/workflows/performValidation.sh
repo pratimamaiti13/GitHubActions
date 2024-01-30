@@ -4,7 +4,7 @@ perform_validation() {
     args=("$@")
     local TestLevel=${args[0]}
     local TestClasses=${args[1]}
-    echo "Number of lines in destructive is $TotalLineInDestructiveChanges"
+    echo "Number of lines in destructive is ${TotalLineInDestructiveChanges}"
     echo ${args[1]}
     if [ ${TotalLineInDestructiveChanges} > 4 ]; then
         if [ ${TestLevel} = "NoTestRun" ]; then
