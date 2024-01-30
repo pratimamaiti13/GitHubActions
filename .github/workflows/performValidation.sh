@@ -4,6 +4,7 @@ perform_validation() {
     args=("$@")
     local TestLevel=${args[0]}
     local TestClasses=${args[1]}
+    echo "Number of lines in destructive is $TotalLineInDestructiveChanges"
     echo ${args[1]}
     if [ ${TestLevel} = "NoTestRun" ]; then
         sf project deploy start --manifest Delta/package/package.xml --target-org $SF_USERNAME --wait 20 --dry-run --json
