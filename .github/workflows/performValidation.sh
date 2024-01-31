@@ -4,6 +4,7 @@ perform_validation() {
     args=("$@")
     local TestLevel=${args[0]}
     local TestClasses=${args[1]}
+    TotalLineInDestructiveChanges=$(awk 'END { print NR }' Delta/destructiveChanges/destructiveChanges.xml)
     echo "Number of lines in destructive is $TotalLineInDestructiveChanges"
     echo ${args[1]}
     if [ ${TotalLineInDestructiveChanges} > 4 ]; then
