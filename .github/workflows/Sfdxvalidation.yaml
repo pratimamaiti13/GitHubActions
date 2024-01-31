@@ -88,6 +88,7 @@ jobs:
           PROCESSED_DESCRIPTION=$(echo "${PR_DESCRIPTION}" | tr -d '\r\n' | sed '/^$/d' | awk '{$1=$1};1')
           echo "Trimmed PR Description: ${PROCESSED_DESCRIPTION}"
           echo "TotalLineInDestructiveChanges=$(awk 'END { print NR }' Delta/destructiveChanges/destructiveChanges.xml)" >> $GITHUB_ENV
+          source $GITHUB_ENV
           echo "Number of line in destructivechanges.xml is: $TotalLineInDestructiveChanges"
           chmod +x .github/workflows/processTestClass.sh
           output=$(.github/workflows/processTestClass.sh "$PROCESSED_DESCRIPTION")
