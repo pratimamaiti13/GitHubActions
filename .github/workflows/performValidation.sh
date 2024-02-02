@@ -7,7 +7,7 @@ perform_validation() {
     TotalLineInDestructiveChanges=$(awk 'END { print NR }' Delta/destructiveChanges/destructiveChanges.xml)
     echo "Number of lines in destructive is $TotalLineInDestructiveChanges"
     echo ${args[1]}
-    copy sfdx-project.json Delta/
+    cp sfdx-project.json Delta/
     cd Delta/
     if [ ${TotalLineInDestructiveChanges} > 4 ]; then
         if [ ${TestLevel} = "NoTestRun" ]; then
