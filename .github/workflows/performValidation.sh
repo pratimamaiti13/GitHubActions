@@ -7,8 +7,9 @@ perform_validation() {
     TotalLineInDestructiveChanges=$(awk 'END { print NR }' Delta/destructiveChanges/destructiveChanges.xml)
     echo "Number of lines in destructive is $TotalLineInDestructiveChanges"
     echo ${args[1]}
+    copy sfdx-project.json Delta/
+    cd Delta/
     if [ ${TotalLineInDestructiveChanges} > 4 ]; then
-        cd Delta/
         if [ ${TestLevel} = "NoTestRun" ]; then
             sf project deploy start --manifest package/package.xml --pre-destructive-changes destructiveChanges/destructiveChanges.xml --target-org $SF_USERNAME --wait 20 --dry-run --json
         elif [ ${TestLevel} = "RunLocalTests" ] || [ ${TestLevel} = "RunAllTestsInOrg" ]; then
