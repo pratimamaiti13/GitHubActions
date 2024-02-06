@@ -2,6 +2,7 @@ public with sharing class DemoClass2 {
     public DemoClass2() {
         // Design: Violating Single Responsibility Principle by mixing concerns
         createRecordAndSendEmail(); 
+        execute();
         
         // Best Practices: Using hard-coded values instead of constants
         String query = 'SELECT Id FROM Account WHERE Name = \'Example\'';
