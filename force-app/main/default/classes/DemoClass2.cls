@@ -35,19 +35,27 @@ public with sharing class DemoClass2 {
         // Code to create records
     }
     // Design: Introducing high cyclomatic complexity
-    private void processLogic(Integer num) {
-        if (num == 1) {
-            System.debug('Case 1');
-        } else if (num == 2) {
-            System.debug('Case 2');
-        } else if (num == 3) {
-            System.debug('Case 3');
-        } else if (num == 4) {
-            System.debug('Case 4');
-        } else if (num == 5) {
-            System.debug('Case 5');
-        } else {
-            System.debug('Default case');
+// Design: Introducing high NCSS line count method
+    private void execute() {
+        // Method with a high number of lines
+        for (Integer i = 0; i < 10; i++) {
+            System.debug('Iteration: ' + i);
+            if (i % 2 == 0) {
+                System.debug('Even');
+            } else {
+                System.debug('Odd');
+            }
+            // Simulate some additional logic
+            if (i > 5) {
+                System.debug('Greater than 5');
+            } else {
+                System.debug('Less than or equal to 5');
+            }
+            // Simulate more logic
+            if (i == 8) {
+                System.debug('Reached 8');
+            }
+            // And so on...
         }
     }
 }
