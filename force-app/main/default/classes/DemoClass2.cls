@@ -52,29 +52,4 @@ public with sharing class DemoClass2 {
         String query = 'SELECT Id FROM Account WHERE Name = \'' + input + '\'';
         List<Account> accounts = Database.query(query);
     }
-
-    // Additional faulty code for design and code style issues
-    
-    // Faulty Design: Tight coupling
-    // Tight coupling between classes makes the code less maintainable and harder to test.
-    // Here, I'll introduce tight coupling by directly instantiating another class.
-    public void tightCoupling() {
-        AnotherClass anotherClass = new AnotherClass(); // Tight coupling
-        anotherClass.method();
-    }
-
-    // Faulty Code Style: Inconsistent naming convention
-    // Inconsistent naming conventions make the code less readable and harder to understand.
-    // Here, I'll use inconsistent naming conventions.
-    public void inconsistentNamingConvention() {
-        String CamelCaseVariable; // Inconsistent naming convention
-        String snake_case_variable; // Inconsistent naming convention
-    }
-}
-
-// Additional class to demonstrate tight coupling
-public class AnotherClass {
-    public void method() {
-        // Method implementation
-    }
 }
