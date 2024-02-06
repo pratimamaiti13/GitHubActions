@@ -6,5 +6,8 @@ export default class PatimaLWC extends LightningElement {
        if (x === -0) {
     // doSomething()...
     }
+        if (Object.is(x, -0)) {
+    // doSomething()...
+}
     }
 }
