@@ -29,4 +29,9 @@ public with sharing class DemoClass2 {
     private void createRecordAndSendEmail() {
         // Faulty code here to perform record creation and email sending
     }
+    
+    // Additional method
+    private void createRecord() {
+        // Code to create records
+    }
 }
