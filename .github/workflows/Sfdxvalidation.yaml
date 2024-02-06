@@ -73,10 +73,12 @@ jobs:
         run: |
           mkdir Delta
           git branch
-          sf sgd:source:delta --to HEAD --from HEAD~1 --output Delta
+          sf sgd:source:delta --to HEAD --from HEAD~1 --output Delta --generate-delta
           ls
           cat Delta/destructiveChanges/destructiveChanges.xml
           cat Delta/package/package.xml
+      - name: Install sfdx scanner
+        run: sf plugins:install @salesforce/sfdx-scanner
       - name: Validation against salesforce
         run: |
           set -x
