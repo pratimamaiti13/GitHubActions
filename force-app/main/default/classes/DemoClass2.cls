@@ -34,4 +34,20 @@ public with sharing class DemoClass2 {
     private void createRecord() {
         // Code to create records
     }
+    // Design: Introducing high cyclomatic complexity
+    private void processLogic(Integer num) {
+        if (num == 1) {
+            System.debug('Case 1');
+        } else if (num == 2) {
+            System.debug('Case 2');
+        } else if (num == 3) {
+            System.debug('Case 3');
+        } else if (num == 4) {
+            System.debug('Case 4');
+        } else if (num == 5) {
+            System.debug('Case 5');
+        } else {
+            System.debug('Default case');
+        }
+    }
 }
