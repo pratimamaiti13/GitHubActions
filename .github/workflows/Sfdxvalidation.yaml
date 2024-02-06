@@ -80,7 +80,7 @@ jobs:
       - name: Install sfdx scanner
         run: sf plugins:install @salesforce/sfdx-scanner
       - name: Scan code
-        run: sfdx scanner:run --format html --target 'Delta/force-app/**/*.cls' --category
+        run: sfdx scanner:run --format html --target 'Delta/force-app/**/*.cls,Delta/force-app/**/*.js' --category
           'Design,Best Practices,Performance,Code Style,Security' --outfile
           'apexScanResults.html'
       - uses: actions/upload-artifact@v4
