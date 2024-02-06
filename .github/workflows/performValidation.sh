@@ -9,7 +9,7 @@ perform_validation() {
     echo ${args[1]}
     cp sfdx-project.json Delta/
     cd Delta/
-    if [ ${TotalLineInDestructiveChanges} > 4 ]; then
+    if [ ${TotalLineInDestructiveChanges} -gt 4 ]; then
         if [ ${TestLevel} = "NoTestRun" ]; then
             sf project deploy start --manifest package/package.xml --pre-destructive-changes destructiveChanges/destructiveChanges.xml --target-org $SF_USERNAME --wait 20 --dry-run --json
         elif [ ${TestLevel} = "RunLocalTests" ] || [ ${TestLevel} = "RunAllTestsInOrg" ]; then
