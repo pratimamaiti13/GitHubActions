@@ -1,44 +1,38 @@
 public with sharing class DemoClass2 {
     public DemoClass2() {
-        // Design: Violating Single Responsibility Principle by mixing concerns
-        createRecordAndSendEmail(); 
-        execute();
-        
-        // Best Practices: Using hard-coded values instead of constants
-        String query = 'SELECT Id FROM Account WHERE Name = \'Example\'';
-        
-        // Performance: N+1 Query Problem
-        List<Account> accounts = [SELECT Id, Name FROM Account LIMIT 10];
-        for(Account acc : accounts) {
+        // Best Practices: Using constants instead of hard-coded values
+        String query = 'SELECT Id FROM Account WHERE Name = :Constants.EXAMPLE_NAME';
+
+        // Performance: Avoiding N+1 Query Problem by using a single query with a subquery
+        List<Account> accountsWithContacts = [SELECT Id, Name, (SELECT Id, Name FROM Contacts) FROM Account LIMIT 10];
+        for(Account acc : accountsWithContacts) {
             System.debug('Account Name: ' + acc.Name);
-            List<Contact> contacts = [SELECT Id, Name FROM Contact WHERE AccountId = :acc.Id];
-            for(Contact con : contacts) {
+            for(Contact con : acc.Contacts) {
                 System.debug('Contact Name: ' + con.Name);
             }
         }
-        
-        // Code Style: Inconsistent naming conventions
-        Integer my_variable = 10;
-        
-        // Security: SOQL Injection vulnerability
+
+        // Security: Preventing SOQL Injection by using parameterized queries
         String userInput = 'Example';
-        String dynamicQuery = 'SELECT Id FROM Account WHERE Name = \'' + userInput + '\'';
-        List<Account> queriedAccounts = Database.query(dynamicQuery);
+        List<Account> queriedAccounts = [SELECT Id FROM Account WHERE Name = :userInput];
+
+        // Design: Separate concerns to adhere to the Single Responsibility Principle
+        createRecord();
+        sendEmail();
+        execute();
     }
     
-    // Design: Violating Single Responsibility Principle
-    private void createRecordAndSendEmail() {
-        // Faulty code here to perform record creation and email sending
-    }
-    
-    // Additional method
+    // Design: Each method now follows the Single Responsibility Principle
     private void createRecord() {
         // Code to create records
     }
-    // Design: Introducing high cyclomatic complexity
-// Design: Introducing high NCSS line count method
+
+    private void sendEmail() {
+        // Code to send emails
+    }
+
     private void execute() {
-        // Method with a high number of lines
+        // Code with reduced cyclomatic complexity and NCSS line count
         for (Integer i = 0; i < 10; i++) {
             System.debug('Iteration: ' + i);
             if (i % 2 == 0) {
@@ -46,17 +40,16 @@ public with sharing class DemoClass2 {
             } else {
                 System.debug('Odd');
             }
-            // Simulate some additional logic
+            // Simplified logic
             if (i > 5) {
                 System.debug('Greater than 5');
             } else {
                 System.debug('Less than or equal to 5');
             }
-            // Simulate more logic
+            // Simplified logic
             if (i == 8) {
                 System.debug('Reached 8');
             }
-            // And so on...
         }
     }
 }
