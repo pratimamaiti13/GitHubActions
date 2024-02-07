@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<ruleset name="PMD-Rules">
+<ruleset name="PMDRule">
   <description>
 	The rulesets we want to use in pmd. For a detailed description of pmd rulesets: http://pmd.sourceforge.net/rules/index.html
   </description>
