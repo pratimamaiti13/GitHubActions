@@ -81,7 +81,9 @@ jobs:
         run: sf plugins:install @salesforce/sfdx-scanner
       - name: Scan code
         id: scanCode
-        run: sfdx scanner:run --format "html" --target "Delta/force-app/" --category 'problem,suggestion,layout' --pmdconfig "pmdRule.xml" --normalize-severity --severity-threshold 1 --outfile "apexScanResults.html"
+        run: |
+          ls
+          sfdx scanner:run --format "html" --target "Delta/force-app/" --category 'problem,suggestion,layout' --pmdconfig "./pmdRule.xml" --normalize-severity --severity-threshold 1 --outfile "apexScanResults.html"
       - uses: actions/upload-artifact@v4
         with:
           name: cli-scan-report
