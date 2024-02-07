@@ -86,7 +86,7 @@ jobs:
         with:
           name: cli-scan-report
           path: apexScanResults.html
-          if: ${{ always() && (steps.scanCode.outcome == 'success' || steps.scanCode.outcome == 'failure') }}
+        if: ${{ always() && (steps.scanCode.outcome == 'success' || steps.scanCode.outcome == 'failure') }}
       - name: Validation against salesforce
         run: |
           set -x
