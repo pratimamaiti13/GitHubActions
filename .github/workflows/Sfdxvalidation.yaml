@@ -83,7 +83,7 @@ jobs:
         id: scanCode
         run: |
           ls
-          sfdx scanner:run --format "html" --target "Delta/force-app/" --eslintconfig ".eslintrc.cjs" --category 'Design,Best Practices,Performance,Code Style,Security' --normalize-severity --severity-threshold 1 --outfile "apexScanResults.html"
+          sfdx scanner:run --format "html" --target "Delta/force-app/" --eslintconfig ".eslintrc.js" --category 'Design,Best Practices,Performance,Code Style,Security' --normalize-severity --severity-threshold 1 --outfile "apexScanResults.html"
       - uses: actions/upload-artifact@v4
         with:
           name: cli-scan-report
