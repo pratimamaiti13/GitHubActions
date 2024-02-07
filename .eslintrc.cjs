@@ -7,7 +7,9 @@ module.exports = {
       jest: true,
     }, 
     extends: [
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:jsx-a11y/recommended"
     ],
     plugins: [
       "react",
