@@ -24,10 +24,11 @@ jobs:
           fetch-depth: 0
     - name: Merge Source into target
       run: |
+        set -x
         git config --global user.email "pratima.maiti77@gmail.com"
         git config --global user.name "pratimamaiti13"
         git checkout ${BRANCH_NAME}
-        git merge --no-commit --no-ff origin/${{ inputs.source-branch }}
+        git merge --no-commit origin/${{ inputs.source-branch }}
         conflicted_files=$(git diff --name-only --diff-filter=U)
         git add .
         git commit -m "Merged ${{ inputs.source-branch }} into $BRANCH_NAME with conflicts in: $conflicted_files"
