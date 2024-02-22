@@ -10,4 +10,5 @@ jobs:
     steps:
     - name: Merge source branch into Target branch
       run: |
-        echo "The base branch is: ${{ github.ref##*/ }}"
+        GITHUB_REF=${{ github.ref }}
+        echo ${GITHUB_REF##*/}
