@@ -3,7 +3,11 @@ name: Manual Trigger Workflow
 # Configure Manual Trigger
 on:
   workflow_dispatch:
-
+    inputs:
+      source-branch:
+        description: 'Name of the source branch'
+        required: true
+        type: string
 jobs:
   build:
     runs-on: ubuntu-latest
