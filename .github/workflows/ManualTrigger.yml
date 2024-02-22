@@ -7,3 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    steps:
+    - name: Merge source branch into Target branch
+      run: |
+        echo "The base branch is: ${{ github.base_ref }}"
