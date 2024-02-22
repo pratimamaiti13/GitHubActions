@@ -25,7 +25,7 @@ jobs:
     - name: Merge Source into target
       run: |
         git checkout ${BRANCH_NAME}
-        git merge --no-commit ${{ inputs.source-branch }}
+        git merge --no-commit origin/${{ inputs.source-branch }}
         conflicted_files=$(git diff --name-only --diff-filter=U)
         git add .
         git commit -m "Merged ${{ inputs.source-branch }} into $BRANCH_NAME with conflicts in: $conflicted_files"
