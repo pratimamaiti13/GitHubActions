@@ -17,3 +17,4 @@ jobs:
         GITHUB_REF=${{ github.ref }}
         BRANCH_NAME=${GITHUB_REF##*/}
         echo ${BRANCH_NAME}
+        echo ${{ inputs.source-branch }}
