@@ -35,4 +35,4 @@ jobs:
         conflicted_files=$(git diff --name-only --diff-filter=U)
         git add .
         git commit -m "Merged ${{ inputs.source-branch }} into ${{ env.BASE_BRANCH_COPY }} with conflicts in: $conflicted_files"
-        git push origin "${{ env.BASE_BRANCH_NAME }}"
+        git push origin "${{ env.BASE_BRANCH_COPY }}"
