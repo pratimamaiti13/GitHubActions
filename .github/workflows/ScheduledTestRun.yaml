@@ -2,7 +2,8 @@ name: Apex test run on schedule
 run-name: ${{ github.actor }} is learning GitHub Actions
 on:
   schedule:
-    - cron: '50 10 * * *'
+    - cron: '04 11 * * *'
+
 jobs:
   apex-test-run-scheduled:
     runs-on: ubuntu-latest 
@@ -10,7 +11,7 @@ jobs:
       - name: Checkout scm
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          ref: dev
       - name: Install jq
         run: |
           sudo apt install -y jq
