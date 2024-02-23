@@ -22,10 +22,10 @@ jobs:
       uses: actions/checkout@v4
       with:
           fetch-depth: 0
-    - name: Merge source branch into current branch
-      uses: pullreminders/merge-action@v4
+    - name: Merge branch
+      uses: everlytic/branch-merge@1.1.2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        method: merge
-        branch: ${{ github.ref }}
-        source_branch: ${{ inputs.source-branch }}
+        github_token: ${{ github.token }}
+        source_ref: ${{ github.ref }}
+        target_branch: ${BRANCH_NAME}
+        commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
