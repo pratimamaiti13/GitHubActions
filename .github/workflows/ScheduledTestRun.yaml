@@ -1,8 +1,9 @@
 name: Apex test run on schedule
 run-name: ${{ github.actor }} is learning GitHub Actions
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '04 11 * * *'
+    - cron: '25 12 * * *'
 
 jobs:
   apex-test-run-scheduled:
