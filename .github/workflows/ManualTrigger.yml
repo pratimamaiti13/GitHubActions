@@ -29,3 +29,4 @@ jobs:
         source_ref: ${{ inputs.source-branch }}
         target_branch: ${{ env.BASE_BRANCH_NAME }}
         commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
+        force: true
