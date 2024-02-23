@@ -1,12 +1,8 @@
 name: sfdx-validation-on-PR
 run-name: ${{ github.actor }} is learning GitHub Actions
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-    branches:
-      - dev
+  schedule:
+    - cron: '50 15 * * *'
 jobs:
   sfdx-validation:
     runs-on: ubuntu-latest 
