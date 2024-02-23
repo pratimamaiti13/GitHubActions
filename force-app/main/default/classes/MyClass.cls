@@ -9,3 +9,7 @@ public with sharing class MyClass {
     }
 }
 //compiled successfully
+<<<<<<< HEAD
+=======
+//shivam bhardwaj1234
+>>>>>>> origin/master-1
