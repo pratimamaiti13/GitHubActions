@@ -17,6 +17,7 @@ jobs:
         GITHUB_REF=${{ github.ref }}
         BRANCH_NAME=${GITHUB_REF##*/}
         echo "BASE_BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+        echo "BASE_BRANCH_COPY=${BRANCH_NAME}-copy" >> $GITHUB_ENV
         echo ${{ inputs.source-branch }}
     - name: Checkout scm
       uses: actions/checkout@v4
@@ -28,8 +29,10 @@ jobs:
         git config --global user.email "pratima.maiti77@gmail.com"
         git config --global user.name "pratimamaiti13"
         git checkout ${{ env.BASE_BRANCH_NAME }}
+        git branch ${{ env.BASE_BRANCH_COPY }}
+        git checkout ${{ env.BASE_BRANCH_COPY }}
         git merge --no-commit origin/${{ inputs.source-branch }} || true
         conflicted_files=$(git diff --name-only --diff-filter=U)
         git add .
-        git commit -m "Merged ${{ inputs.source-branch }} into ${{ env.BASE_BRANCH_NAME }} with conflicts in: $conflicted_files"
+        git commit -m "Merged ${{ inputs.source-branch }} into ${{ env.BASE_BRANCH_COPY }} with conflicts in: $conflicted_files"
         git push origin "${{ env.BASE_BRANCH_NAME }}"
