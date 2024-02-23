@@ -2,7 +2,7 @@ name: Apex test run on schedule
 run-name: ${{ github.actor }} is learning GitHub Actions
 on:
   schedule:
-    - cron: "41 1 * * *"
+    - cron: "42 13 * * *"
 jobs:
   apex-test-run-scheduled:
     runs-on: ubuntu-latest 
