@@ -1,0 +1,36 @@
+name: Apex test run on schedule
+run-name: ${{ github.actor }} is learning GitHub Actions
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 12 * * *'
+
+jobs:
+  apex-test-run-scheduled:
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Checkout scm
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install jq
+        run: |
+          sudo apt install -y jq
+          jq --version
+      - name: Install node js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: |
+          node --version
+          npm --version
+      - name: Install salesforce cli
+        run: |
+          npm install -g @salesforce/cli
+          sf -v
+      - name: Authorize with salesforce org
+        run: |
+          echo "${{ secrets.ENCODED_SERVER_KEY }}" | base64 -d > server.key
+          sf auth:jwt:grant --instance-url https://login.salesforce.com/ --username pratimamaiti@nagarro.com --client-id 3MVG9pRzvMkjMb6kNn45Qi9K2FLiCMPaUlgi9jHEcgHqZSVlMWwhpHmn8T4VINYFTBYElbS0KV0GyvDfS2MOg --jwt-key-file server.key
+      - name: Run all local apex tests
+        run: sf apex run test --test-level RunLocalTests --target-org pratimamaiti@nagarro.com --code-coverage --output-dir . --result-format human --wait 240
