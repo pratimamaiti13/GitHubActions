@@ -1,6 +1,7 @@
 name: Apex test run on schedule
 run-name: ${{ github.actor }} is learning GitHub Actions
 on:
+  workflow_dispatch:
   schedule:
     - cron: "31 14 * * *"
 
@@ -33,3 +34,7 @@ jobs:
           sf auth:jwt:grant --instance-url https://login.salesforce.com/ --username pratimamaiti@nagarro.com --client-id 3MVG9pRzvMkjMb6kNn45Qi9K2FLiCMPaUlgi9jHEcgHqZSVlMWwhpHmn8T4VINYFTBYElbS0KV0GyvDfS2MOg --jwt-key-file server.key
       - name: Run all local apex tests
         run: sf apex run test --test-level RunLocalTests --target-org pratimamaiti@nagarro.com --code-coverage --output-dir . --result-format human --wait 240
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Test-report
+          path: test-result.txt
