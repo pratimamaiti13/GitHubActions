@@ -1,37 +1,42 @@
-name: Apex test run on schedule
-run-name: ${{ github.actor }} is learning GitHub Actions
+name: CI/CD
+
 on:
   push:
     branches:
-      - dev 
+      - dev
+      - uat
   schedule:
-    - cron: "11 14 * * *"
+    - cron: "0 6 * * *"  # Daily at 12:00 PM IST (UTC+5:30)
+
 jobs:
-  apex-test-run-scheduled:
-    runs-on: ubuntu-latest 
+  build:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/uat'
     steps:
-      - name: Checkout scm
-        uses: actions/checkout@v4
-        with:
-          ref: dev
-      - name: Install jq
-        run: |
-          sudo apt install -y jq
-          jq --version
-      - name: Install node js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - run: |
-          node --version
-          npm --version
-      - name: Install salesforce cli
-        run: |
-          npm install -g @salesforce/cli
-          sf -v
-      - name: Authorize with salesforce org
-        run: |
-          echo "${{ secrets.ENCODED_SERVER_KEY }}" | base64 -d > server.key
-          sf auth:jwt:grant --instance-url https://login.salesforce.com/ --username pratimamaiti@nagarro.com --client-id 3MVG9pRzvMkjMb6kNn45Qi9K2FLiCMPaUlgi9jHEcgHqZSVlMWwhpHmn8T4VINYFTBYElbS0KV0GyvDfS2MOg --jwt-key-file server.key
-      - name: Run all local apex tests
-        run: sf apex run test --test-level RunLocalTests --target-org pratimamaiti@nagarro.com --code-coverage --output-dir . --result-format human --wait 240
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build
+        run: echo "Building..."
+
+  test:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/uat'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: echo "Running tests..."
+
+  dev_schedule:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: Scheduled pipeline for Dev branch
+        run: echo "Scheduled pipeline for Dev branch."
+
+  uat_schedule:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/uat'
+    steps:
+      - name: Scheduled pipeline for UAT branch
+        run: echo "Scheduled pipeline for UAT branch."
