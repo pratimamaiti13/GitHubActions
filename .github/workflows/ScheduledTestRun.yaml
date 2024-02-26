@@ -1,0 +1,30 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - dev
+      - uat
+      - master
+  schedule:
+    - cron: "55 6 * * *"  # Daily at 12:00 PM IST (UTC+5:30)
+
+jobs:
+  dev_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with: { ref: dev }
+      - name: Scheduled pipeline for Dev branch
+        run: echo "Scheduled pipeline for Dev branch."
+
+  master_schedule:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with: { ref: master }
+      - name: Scheduled pipeline for master branch
+        run: echo "Scheduled pipeline for master branch."
