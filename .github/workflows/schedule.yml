@@ -1,0 +1,50 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - dev
+      - uat
+      - master
+  schedule:
+    - cron: "35 6 * * *"  # Daily at 12:00 PM IST (UTC+5:30)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build
+        run: echo "Building..."
+
+  test:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/uat' || github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: echo "Running tests..."
+
+  dev_schedule:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/dev'
+    steps:
+      - name: Scheduled pipeline for Dev branch
+        run: echo "Scheduled pipeline for Dev branch."
+
+  uat_schedule:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/uat'
+    steps:
+      - name: Scheduled pipeline for UAT branch
+        run: echo "Scheduled pipeline for UAT branch."
+
+  master_schedule:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Scheduled pipeline for master branch
+        run: echo "Scheduled pipeline for master branch."
