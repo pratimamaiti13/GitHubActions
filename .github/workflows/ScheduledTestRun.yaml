@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
         with: { ref: dev }
       - name: Scheduled pipeline for Dev branch
-        run: echo "Scheduled pipeline for Dev branch."
+        run: echo "Scheduled pipeline for Dev branch." 
 
   master_schedule:
     runs-on: ubuntu-latest
