@@ -7,7 +7,7 @@ on:
       - uat
       - master
   schedule:
-    - cron: "7 7 * * *"  # Daily at 12:00 PM IST (UTC+5:30)
+    - cron: "18 7 * * *"  # Daily at 12:00 PM IST (UTC+5:30)
 
 jobs:
   dev_schedule:
