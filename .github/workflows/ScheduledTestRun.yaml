@@ -6,7 +6,7 @@ on:
       - dev
       - uat
   schedule:
-    - cron: "0 6 * * *"  # Daily at 12:00 PM IST (UTC+5:30)
+    - cron: "25 6 * * *"  # Daily at 12:00 PM IST (UTC+5:30)
 
 jobs:
   build:
