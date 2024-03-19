@@ -1,0 +1,21 @@
+name: Parallel Steps Example
+
+on: [push]
+
+jobs:
+  parallel_steps_job:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        parallel_step: [1, 2, 3]  # Define parallel steps
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Parallel Step ${{ matrix.parallel_step }} - Task A
+        run: echo "Executing Task A in parallel step ${{ matrix.parallel_step }}"
+
+      - name: Parallel Step ${{ matrix.parallel_step }} - Task B
+        run: echo "Executing Task B in parallel step ${{ matrix.parallel_step }}"
