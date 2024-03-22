@@ -17,6 +17,7 @@ jobs:
     - name: Commit and push changes
       run: |
         cd target-repo
+        git config --local credential.helper store
         git add .
         git commit -m "Update from GitHub Action"
-        git push https://${{ secrets.PushToGitHub }}@github.com/pratimamaiti13/test.git thirsty
+        git push https://pratimamaiti13:${{ secrets.PushToGitHub }}@github.com/pratimamaiti13/test.git thirsty
