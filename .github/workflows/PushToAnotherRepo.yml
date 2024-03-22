@@ -1,0 +1,22 @@
+name: Push to Another Repo
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  push_to_another_repo:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout current repository
+      uses: actions/checkout@v2
+    - name: Clone target repository
+      run: git clone https://github.com/pratimamaiti13/test.git target-repo
+    - name: Commit and push changes
+      run: |
+        cd target-repo
+        git add .
+        git commit -m "Update from GitHub Action"
+        git push https://${{ secrets.PushToGitHub }}@github.com/pratimamaiti13/test.git thirsty
