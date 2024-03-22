@@ -16,8 +16,7 @@ jobs:
     - name: Clone target repository
       run: |
         git clone https://${{ secrets.TARGET_REPO_PAT }}@github.com/pratimamaiti13/test.git target-repo
-        
-    # Make necessary changes to the cloned repository
+        mkdir testdir
       
     - name: Commit and push changes
       run: |
