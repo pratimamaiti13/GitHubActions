@@ -19,9 +19,10 @@ jobs:
     - name: Commit and push changes
       run: |
         cd target-repo
-        mkdir testdir
         git config --local user.email "actions@github.com"
         git config --local user.name "GitHub Action"
+        git checkout origin/thirsty
+        mkdir testdir
         git add .
         git commit -m "Update from GitHub Action"
         git push origin thirsty
