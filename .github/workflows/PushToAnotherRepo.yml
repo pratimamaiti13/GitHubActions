@@ -3,7 +3,7 @@ name: Push to Another Repo
 on:
   push:
     branches:
-      - master
+      - master  # Trigger on push events to the main branch
 
 jobs:
   push_to_another_repo:
@@ -12,12 +12,18 @@ jobs:
     steps:
     - name: Checkout current repository
       uses: actions/checkout@v2
+      
     - name: Clone target repository
-      run: git clone https://github.com/pratimamaiti13/test.git target-repo
+      run: |
+        git clone https://${{ secrets.TARGET_REPO_PAT }}@github.com/pratimamaiti13/test.git target-repo
+        
+    # Make necessary changes to the cloned repository
+      
     - name: Commit and push changes
       run: |
         cd target-repo
-        git config --local credential.helper store
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Action"
         git add .
         git commit -m "Update from GitHub Action"
-        git push https://pratimamaiti13:${{ secrets.PushToGitHub }}@github.com/pratimamaiti13/test.git thirsty
+        git push origin thirsty
